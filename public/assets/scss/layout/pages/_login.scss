@@ -183,6 +183,14 @@
 
       &-title {
         color: u.$text-body-2;
+        font-size: 14px;
+        & > a {
+          color: u.$blue;
+        }
+      }
+
+      &-forgot {
+        margin-left: auto;
         & > a {
           color: u.$blue;
         }
