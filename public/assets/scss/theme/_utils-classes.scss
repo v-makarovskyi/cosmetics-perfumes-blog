@@ -1,5 +1,0 @@
-@use "../utils/" as u;
-
-.visually-hidden {
-  @include u.mix-visually-hidden()
-}
