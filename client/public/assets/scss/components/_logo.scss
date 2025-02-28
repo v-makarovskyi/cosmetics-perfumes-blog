@@ -1,0 +1,9 @@
+@use "../utils/" as u;
+
+.logo {
+  &__image {
+    display: block;
+    height: auto;
+    max-width: 100%;
+  }
+}

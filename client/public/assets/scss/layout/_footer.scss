@@ -1,0 +1,133 @@
+@use "../utils/" as u;
+
+.footer {
+  background-color: var(--color-bg-footer);
+  &__inner {
+    padding-top: 90px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+  }
+
+  &__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+    text-align: center;
+  }
+
+  &__logo {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__logo img {
+    width: 50%;
+
+    @include u.bp-only(md) {
+      width: 35%;
+    }
+
+    @include u.bp-only(lg) {
+      width: 25%;
+    }
+
+    @include u.bp-up(xl) {
+      width: 20%;
+    }
+  }
+
+  &__description {
+    font-style: italic;
+    font-size: 14px;
+
+    @include u.bp-up(sm) {
+      font-size: 16px;
+    }
+  }
+
+  &__body {
+    padding-block: 20px;
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+
+    &-description {
+      display: none;
+      min-width: 320px;
+      font-size: 16px;
+      font-weight: 500;
+
+      @include u.bp-up(md) {
+        display: inline-block;
+      }
+    }
+
+    &-image-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      column-gap: 20px;
+
+      @include u.bp-up(md) {
+        justify-content: start;
+      }
+    }
+
+    &-image {
+      width: 30%;
+
+      @include u.bp-only(sm) {
+        width: 25%;
+      }
+
+      @include u.bp-up(lg) {
+        width: 20%;
+      }
+    }
+
+    &-widget {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      row-gap: 16px;
+
+      &-social {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 40px;
+
+        & a {
+          @include u.mix-flex-center($isInline: true);
+          @include u.mix-square(40px);
+
+          @include u.bp-up(md) {
+            @include u.mix-square(50px);
+          }
+
+          border-radius: 10px;
+          border: var(--border);
+          background-color: var(--color-common-white);
+          box-shadow: 0px 1px 1px rgba($color: u.$black, $alpha: 0.3);
+
+          @include u.mix-hover {
+            background-color: u.$primary;
+            color: var(--color-common-white);
+          }
+
+          & > svg {
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
+
+  &__extra {
+    padding-block: 50px;
+    border-top: 1px solid rgba($color: u.$black, $alpha: 0.3);
+  }
+}
