@@ -25,5 +25,3 @@ yarn-error.log*
 
 /.vercel
 .env
-
-.log-env
