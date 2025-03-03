@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import logo from "../../images/logos/logo-2.png";
-import appleStore from "../../images/appstore.png";
-import googlePlay from "../../images/googleplay.png";
+import logo from "@images/logos/logo-2.png";
+import appleStore from "@images/appstore.png";
+import googlePlay from "@images/googleplay.png";
 import { Facebook } from "../../svg/facebook";
 import { Instagram } from "../../svg/instagram";
 import { In } from "../../svg/in";

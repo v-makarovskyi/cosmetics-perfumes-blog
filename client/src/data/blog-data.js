@@ -1,6 +1,6 @@
-import blog_1_image from '../images/blog/blog-sm-1.jpg'
-import blog_2_image from '../images/blog/blog-sm-2.jpg'
-import blog_3_image from '../images/blog/blog-sm-3.jpg'
+import blog_1_image from '@images/blog/blog-sm-1.jpg'
+import blog_2_image from '@images/blog/blog-sm-2.jpg'
+import blog_3_image from '@images/blog/blog-sm-3.jpg'
 
 export const blog_data = [
   {

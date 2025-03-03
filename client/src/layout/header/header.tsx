@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import logo from "../../images/logos/logo-2.png";
+import logo from "/public/images/logos/logo-2.png";
 import { PhoneTwo } from "../../svg/phoneTwo";
 import { Facebook } from "../../svg/facebook";
 import { Wishlist } from "../../svg/wishlist";
