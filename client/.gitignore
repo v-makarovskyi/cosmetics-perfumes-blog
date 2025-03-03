@@ -25,7 +25,4 @@ yarn-error.log*
 package-lock.json
 
 
-.vercel
-.env
-
 /destination
