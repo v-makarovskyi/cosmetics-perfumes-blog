@@ -28,5 +28,5 @@ package-lock.json
 
 
 .vercel
-/.vscode
+.vscode
 client/destination
