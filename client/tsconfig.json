@@ -31,6 +31,6 @@
     "./src/**/*.js",
     "webpack.config.dev.js",
     "webpack.config.js",
-    "index.tsx"
+    "index.tsx",
   ]
 }
