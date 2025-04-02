@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Image" ALTER COLUMN "loaded_at" SET DEFAULT CURRENT_TIMESTAMP;
