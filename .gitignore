@@ -28,5 +28,8 @@ package-lock.json
 
 
 .vercel
-.vscode
+/.vscode
 client/destination
+
+prisma/migrations/
+

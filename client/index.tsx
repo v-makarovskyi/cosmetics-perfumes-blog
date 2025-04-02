@@ -7,6 +7,7 @@ if (typeof window !== "undefined") {
   require("bootstrap/dist/js/bootstrap");
 }
 
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
