@@ -31,5 +31,5 @@ package-lock.json
 /.vscode
 client/destination
 
-prisma/migrations/*
+prisma/migrations/
 
