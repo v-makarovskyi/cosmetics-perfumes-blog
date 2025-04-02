@@ -1,16 +1,20 @@
-import React from 'react';
-import { RegisterPage } from './pages/register';
-import { LoginPage } from './pages/login';
-import { Footer } from './layout/footer/footer';
+import React from "react";
+import { Routes, Route } from "react-router";
+import { Home } from "@src/pages/home";
+import { RegisterPage } from "./pages/register";
+import { LoginPage } from "./pages/login";
+import { RootLayout } from "@src/layout/root-layout";
 
-
-
-import './main-scss-app.scss'
+import "./main-scss-app.scss";
 
 function App() {
   return (
     <div className="app">
-      <LoginPage />
+      <Routes>
+        <Route element={<RootLayout />}>
+          <Route index element={<Home />} />
+        </Route>
+      </Routes>
     </div>
   );
 }

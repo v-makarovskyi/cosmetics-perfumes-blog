@@ -38,7 +38,7 @@ module.exports = function (webpackEnv) {
       chunkFilename: isEnvProd
         ? "static/js/[name].[contenthash:8].chunk.js"
         : isEnvDev && "static/js/[name].chunk.js",
-      assetModuleFilename: "static/media/[name].[hash][ext]",
+      assetModuleFilename: "cosmetics-perfumes-blog/media/[name].[hash][ext]",
       publicPath: "/",
     },
 
@@ -51,6 +51,7 @@ module.exports = function (webpackEnv) {
         "@images": path.join(paths.appPublic, "images"),
         "@fonts": path.join(paths.appPublic, "fonts"),
         "@scss": path.join(paths.appPublic, "scss"),
+        "@src":  String(paths.appSrc)
       },
     },
 

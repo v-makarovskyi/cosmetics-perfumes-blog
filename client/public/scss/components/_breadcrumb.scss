@@ -4,11 +4,50 @@
   padding-top: 95px;
   padding-bottom: 50px;
 
+  &__parallex {
+    position: static;
+    background-position: 50% 30px;
+    background-attachment: fixed;
+    background-color: transparent;
+    overflow: hidden;
+
+    @include u.bp-down(md) {
+      background-position: (60% 30px);
+    }
+  }
+
+  &--home {
+    display: flex;
+    height: 400px;
+    padding: 0;
+    align-items: center;
+
+    @include u.bp-down(md) {
+      height: 300px;
+    }
+  }
+
   &__title {
     margin-bottom: 6px;
     font-size: 44px;
     line-height: 1;
     font-weight: 500;
+
+    &--home {
+      position: relative;
+      color: #d79317;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 25px;
+        left: 89px;
+        display: inline-block;
+        height: 3px;
+        width: 50px;
+        background-color: #d79317;
+      }
+    }
   }
 
   &__item {
