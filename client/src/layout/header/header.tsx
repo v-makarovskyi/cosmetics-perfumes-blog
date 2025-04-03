@@ -5,7 +5,7 @@ import { Facebook } from "../../svg/facebook";
 import { Wishlist } from "../../svg/wishlist";
 import { Hamburger } from "../../svg/hamburger";
 import { User } from "../../svg/user";
-import { Search } from "../../svg/search";
+import { SearchForm } from "@src/components/forms/search-form";
 import { HeaderTopRight } from "./header-parts/header-top-right";
 import { Menus } from "./header-parts/menus";
 import { useSticky } from "../../hooks/useSticky";
@@ -85,16 +85,7 @@ export const Header: FC = (): JSX.Element => {
                 <div className="col-6 col-sm-8 col-md-7 col-lg-7 col-xl-5">
                   <div className="header__bottom-right d-flex align-items-center justify-content-end">
                     <div className="header__search search d-none d-sm-block">
-                      <form className="search__form">
-                        <input
-                          className="search__input input"
-                          type="text"
-                          placeholder="Search for blogs..."
-                        />
-                        <button className="search__button button" type="submit">
-                          <Search />
-                        </button>
-                      </form>
+                      <SearchForm placeholder="Search for content..."/>
                     </div>
                     <ul className="header__actions d-flex align-items-center">
                       <li className="header__actions-item">

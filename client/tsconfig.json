@@ -18,6 +18,7 @@
     "paths": {
       "*": ["node_modules/@types/*", "*"],
       "@src/*": ["./src/*"],
+      "@svg/*": ["./src/svg/*"],
       "@public/*": ["./public/*"]
     },
     "resolveJsonModule": true,

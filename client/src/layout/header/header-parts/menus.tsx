@@ -32,7 +32,7 @@ export const Menus: FC = (): JSX.Element => {
             </a>
             <div className="menus__submenu menus__bigmenu">
               <div className="row">
-                {blogs.map((blog) => (
+                {blogs.slice(0,3).map((blog) => (
                   <div key={blog.id}  className="col-xl-4">
                     <BlogItem blog={blog} />
                   </div>

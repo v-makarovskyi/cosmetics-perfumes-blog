@@ -51,7 +51,8 @@ module.exports = function (webpackEnv) {
         "@images": path.join(paths.appPublic, "images"),
         "@fonts": path.join(paths.appPublic, "fonts"),
         "@scss": path.join(paths.appPublic, "scss"),
-        "@src":  String(paths.appSrc)
+        "@src":  String(paths.appSrc),
+        "@svg": path.join(paths.appSrc, 'svg')
       },
     },
 

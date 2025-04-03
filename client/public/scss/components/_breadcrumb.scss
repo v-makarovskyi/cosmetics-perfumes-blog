@@ -11,19 +11,25 @@
     background-color: transparent;
     overflow: hidden;
 
+   
+
     @include u.bp-down(md) {
       background-position: (60% 30px);
+    }
+
+    @include u.bp-down(sm) {
+      background-position: 0 0;
     }
   }
 
   &--home {
     display: flex;
-    height: 400px;
+    height: 300px;
     padding: 0;
     align-items: center;
 
     @include u.bp-down(md) {
-      height: 300px;
+      height: 200px;
     }
   }
 

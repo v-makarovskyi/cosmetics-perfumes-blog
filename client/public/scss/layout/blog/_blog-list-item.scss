@@ -1,0 +1,107 @@
+@use "../../utils/" as u;
+
+.blog-list-item {
+  &:not(:last-child) {
+    margin-bottom: 25px;
+  }
+  border: 1px solid rgba($color: u.$black, $alpha: 0.1);
+
+  &__image-container {
+    width: 380px;
+    flex: 0 0 auto;
+    overflow: hidden;
+
+    @include u.bp-down(md) {
+      width: 100%;
+    }
+
+    @include u.bp-only(md) {
+      width: 310px;
+    }
+
+    @include u.bp-only(lg) {
+      width: 100%;
+    }
+
+    & img {
+      height: 100%;
+      object-fit: cover;
+
+      @include u.mix-transition();
+    }
+
+    @include u.mix-hover {
+      & img {
+        scale: 1.1;
+      }
+    }
+  }
+
+  
+  &__content {
+    padding: 40px 40px 45px;
+  }
+
+  &__meta {
+    margin-bottom: 7px;
+
+    & > span {
+       
+        &:not(:last-child) {
+             position: relative;
+             margin-right: 8px;
+             padding-right: 8px;
+
+             &::after {
+                content: '';
+                position: absolute;
+                top: 5;
+                right: 0;
+                width: 1px;
+                height: 17px;
+                background-color: rgba($color: u.$black, $alpha: .1);
+             }
+
+             & > span {
+                & svg {
+                    translate: 0px -2px;
+                }
+             }
+        }
+    }
+  }
+
+
+  &__title {
+    margin-bottom: 12px;
+
+    @include u.mix-hover {
+      cursor: pointer;
+    }
+  }
+
+  &__description {
+    margin-bottom: 23px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  &__btn {
+    width: 50%;
+    padding-block: 7px;
+    background-color: u.$primary;
+    border: none;
+
+    @include u.mix-hover {
+        background-color: u.$black;
+    }
+
+    & span {
+      margin-left: 10px;
+
+      & > svg {
+        translate: 0 -1px;
+      }
+    }
+  }
+}
