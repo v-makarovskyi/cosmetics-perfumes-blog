@@ -6,10 +6,10 @@
     "seed": "node prisma/seed.js"
   },
   "scripts": {
-    "devstart": "nodemon ./bin/www",
-    "debug": "DEBUG=cosmetics-blog:* nodemon ./bin/www",
+    "devstart": "nodemon www.js",
+    "debug": "DEBUG=cosmetics-blog:* nodemon www.js",
     "postinstall": "cd ./client && npm install && npm run build",
-    "start": "node ./bin/www"
+    "start": "node www.js"
   },
   "keywords": [],
   "author": "",
