@@ -9,7 +9,7 @@
     "devstart": "nodemon ./bin/www",
     "debug": "DEBUG=cosmetics-blog:* nodemon ./bin/www",
     "postinstall": "cd ./client && npm install && npm run build",
-    "build": "node ./bin/www"
+    "start": "node ./bin/www"
   },
   "keywords": [],
   "author": "",
