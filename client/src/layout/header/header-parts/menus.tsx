@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
-import { BlogItem } from "../../../components/blog-item";
-import { menu_data } from "../../../data/menu-data";
-import { blog_data } from "../../../data/blog-data";
+import { BlogItem } from "@src/components/blog-item";
+import { menu_data } from "@src/data/menu-data";
+import { blog_data } from "@src/data/blog-data";
 
 export type Blog = {
   id: number;
@@ -32,9 +32,9 @@ export const Menus: FC = (): JSX.Element => {
             </a>
             <div className="menus__submenu menus__bigmenu">
               <div className="row">
-                {blogs.slice(0,3).map((blog) => (
-                  <div key={blog.id}  className="col-xl-4">
-                    <BlogItem blog={blog} />
+                {blogs.slice(0, 3).map((blog) => (
+                  <div key={blog.id} className="col-xl-4">
+                    <BlogItem blog={blog} blogMenusItem />
                   </div>
                 ))}
               </div>

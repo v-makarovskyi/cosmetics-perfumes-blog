@@ -4,8 +4,9 @@ import { ListTab } from "@src/svg/list-tab";
 import { GridTab } from "@src/svg/grid-tab";
 import { blog_data } from "@src/data/blog-data";
 import { BlogData } from "@src/data/blog-data";
-import { BlogGridItem } from "./blog-grid-item";
-import { BlogListItem } from "./blog-list-item";
+/* import { BlogGridItem } from "./blog-grid-item";
+import { BlogListItem } from "./blog-list-item"; */
+import { BlogItem } from "../blog-item";
 
 type BlogGridAreaProps = {
   list_area: boolean;
@@ -76,7 +77,7 @@ export const BlogGridArea: FC<BlogGridAreaProps> = ({
                       {filteredData.map((blog) => {
                         return (
                           <div key={blog.id} className="col-md-6 col-lg-6">
-                            <BlogGridItem blog={blog} />
+                            <BlogItem blog={blog} blogGridItem/>
                           </div>
                         );
                       })}
@@ -93,7 +94,7 @@ export const BlogGridArea: FC<BlogGridAreaProps> = ({
                 >
                   <div className="blog-grid-area__list-item-wrapper">
                     {filteredData.map((blog) => {
-                      return <BlogListItem blog={blog} />;
+                      return <BlogItem key={blog.id} blog={blog} blogListItem />;
                     })}
                   </div>
                 </div>
