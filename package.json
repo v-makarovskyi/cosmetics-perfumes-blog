@@ -8,7 +8,7 @@
   "scripts": {
     "devstart": "nodemon ./bin/www",
     "debug": "DEBUG=cosmetics-blog:* nodemon ./bin/www",
-    "postinstall": "npm install && cd ./client && npm install && npm run build",
+    "postinstall": "cd ./client && npm install && npm run build",
     "start": "node ./bin/www"
   },
   "keywords": [],
