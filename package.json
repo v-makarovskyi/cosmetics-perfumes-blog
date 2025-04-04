@@ -1,7 +1,7 @@
 {
   "name": "cosmetics-perfumes-blog",
   "version": "1.0.0",
-  "main": "bin/www",
+  "main": "www.js",
   "prisma": {
     "seed": "node prisma/seed.js"
   },
