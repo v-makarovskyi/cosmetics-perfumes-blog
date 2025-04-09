@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { LoginShapes } from "./login-shapes";
 import { LoginForm } from "../forms/login-form";
+import { Link } from "react-router";
 
 export const LoginArea: FC = (): JSX.Element => {
   return (
@@ -15,7 +16,7 @@ export const LoginArea: FC = (): JSX.Element => {
                 <p className="login__description">
                   Нет аккаунта?&nbsp;{" "}
                   <span>
-                    <a href="/">Создать учетную запись</a>
+                    <Link to="/register">Создать учетную запись</Link>
                   </span>
                 </p>
               </header>
