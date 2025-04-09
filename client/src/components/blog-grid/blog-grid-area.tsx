@@ -5,6 +5,7 @@ import { GridTab } from "@src/svg/grid-tab";
 import { blog_data } from "@src/data/blog-data";
 import { BlogData } from "@src/data/blog-data";
 import { BlogItem } from "./blog-item";
+import { Pagination } from "../pagination";
 
 type BlogGridAreaProps = {
   list_area?: boolean;
@@ -100,6 +101,7 @@ export const BlogGridArea: FC<BlogGridAreaProps> = ({
                 </div>
               </div>
             </div>
+            <Pagination />
           </div>
 
           <div className="col-lg-4 col-xl-3">
