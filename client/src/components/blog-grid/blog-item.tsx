@@ -79,7 +79,7 @@ export const BlogItem: FC<BlogItemProps> = ({
         ) : null}
       </div>
       {blogMenusItem ? (
-        <h2 className="blog-item__title h4">{title}</h2>
+        <h2 className="blog-item__title">{title}</h2>
       ) : null}
 
       {blogGridItem || blogListItem ? (
@@ -103,7 +103,7 @@ export const BlogItem: FC<BlogItemProps> = ({
               ) : null}
             </div>
           ) : null}
-          <h2 className="blog-item__title h4">{blogListItem ? title : title.slice(0,41)+`...`}</h2>
+          <h2 className="blog-item__title">{blogListItem ? title : title.slice(0,41)+`...`}</h2>
           <p className="blog-item__description">
             {blogListItem ? description_sm.slice(0, 121) : description_sm.slice(0,71)+`...`}
           </p>

@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { BlogItem } from "@src/components/blog-item";
+import { BlogItem } from "@src/components/blog-grid/blog-item";
 import { menu_data } from "@src/data/menu-data";
 import { blog_data } from "@src/data/blog-data";
 

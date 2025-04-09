@@ -31,7 +31,7 @@ export const CommonBreadcrumb: FC<CommonBreadcrumbProps> = ({
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <div className="breascrumb__content">
+            <div className="breadcrumb__content">
               {home ? (
                 <p className="breadcrumb__title breadcrumb__title--home">
                   {title}

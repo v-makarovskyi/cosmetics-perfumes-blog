@@ -1,6 +1,8 @@
 @use "./../utils/" as u;
 
 .breadcrumb {
+  $self: &;
+
   padding-top: 95px;
   padding-bottom: 50px;
 
@@ -11,14 +13,8 @@
     background-color: transparent;
     overflow: hidden;
 
-   
-
-    @include u.bp-down(md) {
-      background-position: (60% 30px);
-    }
-
     @include u.bp-down(sm) {
-      background-position: 0 0;
+      background-position: 15% 30px;
     }
   }
 
@@ -28,8 +24,28 @@
     padding: 0;
     align-items: center;
 
-    @include u.bp-down(md) {
+    @include u.bp-down(sm) {
+      height: 100px;
+    }
+
+    @include u.bp-up(sm) {
+      display: none;
+    }
+
+    @include u.bp-only(lg) {
+      display: flex;
       height: 200px;
+    }
+
+    @include u.bp-up(xl) {
+      height: 270px;
+      display: flex;
+    }
+
+    #{$self} {
+      &__content {
+        padding-left: 40px;
+      }
     }
   }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { CommonBreadcrumb } from "@src/components/breadcrumb/common-breadcrumb";
 import { BlogGridArea } from "@src/components/blog-grid/blog-grid-area";
+import { SectionTitile } from "@src/components/blog-grid/section-title";
 import home_bg from "@images/breadcrumb-bg-home.png";
 
 export function Home() {
@@ -13,6 +14,7 @@ export function Home() {
         img={home_bg}
         center={false}
       />
+      <SectionTitile />
       <BlogGridArea />
     </>
   );

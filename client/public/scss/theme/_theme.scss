@@ -11,6 +11,12 @@ body {
   font-weight: 400;
 }
 
+@include u.bp-up(xxl) {
+	.container {
+		max-width: 1230px;
+	}
+}
+
 
 a {
   text-decoration: none;
@@ -66,7 +72,11 @@ h3, .h3 {
 }
 
 h4, .h4 {
-  @include u.mix-fluid-text(20, 18);
+  @include u.mix-fluid-text(24, 20);
+}
+
+h5, .h5 {
+  @include u.mix-fluid-text(18, 16)
 }
 
 img, video {
