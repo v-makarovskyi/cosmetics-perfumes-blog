@@ -5,6 +5,7 @@ import { RegisterPage } from "./pages/register";
 import { LoginPage } from "./pages/login";
 import { SingleBlogPage } from "./pages/single-blog-page";
 import { RootLayout } from "@src/layout/root-layout";
+import { CategoryPage } from "./pages/category-page";
 
 import "./main-scss-app.scss";
 
@@ -16,8 +17,9 @@ function App() {
           <Route index element={<Home />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="categories/:category" element={<CategoryPage />} />
           <Route
-            path="category/blog-detail/:id"
+            path="blogs/:category/blog-detail/:id"
             element={<SingleBlogPage />}
           ></Route>
         </Route>

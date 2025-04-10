@@ -1,0 +1,43 @@
+@use "../../utils/" as u;
+
+.single-category {
+ /*  padding-top: 50px; */
+  &__top {
+    color: u.$primary;
+    background-color: u.$black;
+    overflow: hidden;
+
+    &-wrapper {
+      box-sizing: border-box;
+      flex-flow: wrap;
+      max-width: 120rem;
+      margin: 0 auto;
+      display: flex;
+    }
+  }
+  &__image-container {
+    flex-basis: 66.6667%;
+    max-width: 66.6667%;
+    display: block;
+
+    & img {
+      height: 100%;
+      image-rendering: optimizeQuality;
+    }
+  }
+
+  &__description {
+    flex-basis: 33.3333%;
+    max-width: 33.3333%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    row-gap: 15px;
+    padding: 30px 21px 100px;
+
+    & h3 {
+      color: u.$primary;
+    }
+  }
+}

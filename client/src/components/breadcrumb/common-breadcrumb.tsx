@@ -6,7 +6,7 @@ type CommonBreadcrumbProps = {
   bg_clr?: boolean;
   center: boolean;
   img?: string;
-  home: boolean;
+  home?: boolean;
 };
 
 export const CommonBreadcrumb: FC<CommonBreadcrumbProps> = ({
