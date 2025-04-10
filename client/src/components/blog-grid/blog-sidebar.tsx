@@ -5,8 +5,15 @@ import {
   BlogSidebarLatest,
   BlogSidebarTags,
 } from "./blog-sidebar-items";
+import { BlogSidebarAuthor } from "./blog-sidebar-items/blog-sidebar-author";
 
-export const BlogSidebar: FC = (): JSX.Element => {
+type BlogSidebarProps = {
+  blogSinglePage?: boolean;
+};
+
+export const BlogSidebar: FC<BlogSidebarProps> = ({
+  blogSinglePage,
+}): JSX.Element => {
   return (
     <div className="blog-sidebar">
       <div className="blog-sidebar__wrapper">
@@ -17,6 +24,7 @@ export const BlogSidebar: FC = (): JSX.Element => {
         </div>
 
         <BlogSidebarCats />
+        {blogSinglePage && <BlogSidebarAuthor />}
         <BlogSidebarLatest />
         <BlogSidebarTags />
       </div>

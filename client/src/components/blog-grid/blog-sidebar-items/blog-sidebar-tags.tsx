@@ -16,7 +16,7 @@ export const BlogSidebarTags: FC = (): JSX.Element => {
       <h4 className="blog-sidebar__widget-title">Популярные tags</h4>
       <div>
         {tagsData.map((tag) => (
-          <a href="#">{tag.title}</a>
+          <a key={tag.id} href="#">{tag.title}</a>
         ))}
       </div>
     </div>

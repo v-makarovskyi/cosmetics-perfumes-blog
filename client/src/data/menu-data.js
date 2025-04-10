@@ -5,31 +5,31 @@ export const menu_data = [
     title: "Дом",
     link: "/",
   },
- /*  {
+  {
     id: 2,
     single: true,
     title: "Тренды",
     link: "/trends",
-  }, */
-  {
+  },
+  /* {
     id: 3,
     single: true,
     title: "Туториалы",
     link: "/guides",
-  },
+  }, */
   {
     id: 4,
     sub_menu: true,
-    title: "Советы",
-    link: "/advices",
+    title: "Отзывы",
+    link: "/reviews",
     sub_menus: [
       {
         title: "Тренды",
         link: "/trends",
       },
       {
-        title: "Туториалы",
-        link: "/guides",
+        title: "Отзывы",
+        link: "/reviews",
       },
       {
         title: "Get the look",

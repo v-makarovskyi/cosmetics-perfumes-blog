@@ -123,3 +123,33 @@
     }
   }
 }
+
+.author-widget {
+  &__wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 17px;
+    align-items: center;
+  }
+
+  &__img-container {
+    & img {
+      object-fit: cover;
+      border-radius: 50%;
+      @include u.mix-square(160px);
+    }
+  }
+
+  &__name {
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  &__professional {
+    font-size: 15px;
+  }
+
+  &__description {
+    text-align: center;
+  }
+}
