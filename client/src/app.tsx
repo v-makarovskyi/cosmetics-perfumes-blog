@@ -6,6 +6,7 @@ import { LoginPage } from "./pages/login";
 import { SingleBlogPage } from "./pages/single-blog-page";
 import { RootLayout } from "@src/layout/root-layout";
 import { CategoryPage } from "./pages/category-page";
+import { ProfilePage } from "./pages/profile-page";
 
 import "./main-scss-app.scss";
 
@@ -22,6 +23,7 @@ function App() {
             path="blogs/:category/blog-detail/:id"
             element={<SingleBlogPage />}
           ></Route>
+          <Route path="users/:profile" element={<ProfilePage />} />
         </Route>
       </Routes>
     </div>

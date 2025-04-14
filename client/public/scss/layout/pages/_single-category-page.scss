@@ -1,7 +1,7 @@
 @use "../../utils/" as u;
 
-.single-category {
- /*  padding-top: 50px; */
+.single-category-page {
+  /*  padding-top: 50px; */
   &__top {
     color: u.$primary;
     background-color: u.$black;
@@ -13,12 +13,22 @@
       max-width: 120rem;
       margin: 0 auto;
       display: flex;
+      flex-direction: column;
+
+      @include u.bp-up(xl) {
+        flex-flow: row nowrap;
+      }
     }
   }
   &__image-container {
-    flex-basis: 66.6667%;
-    max-width: 66.6667%;
+    width: 100%;
+    max-width: 100%;
     display: block;
+
+    @include u.bp-up(xl) {
+      flex-basis: 66.6667%;
+      max-width: 66.6667%;
+    }
 
     & img {
       height: 100%;
@@ -27,17 +37,28 @@
   }
 
   &__description {
-    flex-basis: 33.3333%;
-    max-width: 33.3333%;
+    text-align: center;
+    padding: 20px 15px 20px;
+    width: 100%;
+    max-width: 100%;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    row-gap: 15px;
-    padding: 30px 21px 100px;
+    & span {
+      margin-bottom: 15px;
+      display: inline-block;
+    }
 
     & h3 {
       color: u.$primary;
+    }
+
+    @include u.bp-up(xl) {
+      flex-basis: 33.3333%;
+      max-width: 33.3333%;
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      row-gap: 15px;
+      padding: 30px 21px 100px;
     }
   }
 }

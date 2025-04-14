@@ -14,29 +14,24 @@ const testCategory = {
 
 export const CategoryPage: FC = (): JSX.Element => {
   return (
-    <Fragment>
-        <CommonBreadcrumb center title="trends" subtitle="trends" />
-      <section className="single-category">
-        <div className="single-category__top">
-          <div className="single-category__top-wrapper">
-            <div className="single-category__image-container">
+    <section className="single-category-page">
+      <CommonBreadcrumb center title="trends" subtitle="trends" />
+      <section className="single-category-page__wrapper">
+        <div className="single-category-page__top">
+          <div className="single-category-page__top-wrapper">
+            <div className="single-category-page__image-container">
               <a href="/">
                 <img src={testCategory.main_image} alt="" />
               </a>
             </div>
-            <div className="single-category__description">
+            <div className="single-category-page__description">
               <span>{testCategory.title}</span>
               <h3>{testCategory.description}</h3>
             </div>
           </div>
         </div>
-        <div className="container">
-          <div className="row">
-            <div className="col-12"></div>
-          </div>
-        </div>
       </section>
       <BlogGridArea />
-    </Fragment>
+    </section>
   );
 };
