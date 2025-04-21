@@ -1,3 +1,4 @@
+
 class AuthError extends Error {
   constructor(statusCode='', message) {
     super(message);
