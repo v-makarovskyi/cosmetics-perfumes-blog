@@ -2,7 +2,7 @@ var http = require("node:http");
 var app = require("./app");
 var debug = require("debug")("cosmetics-blog:server");
 
-var port = normalizePort(process.env.PORT || "9090");
+var port = normalizePort(process.env.PORT || "9000");
 app.set("port", port);
 
 var server = http.createServer(app);
