@@ -11,8 +11,7 @@ import AuthError from "../../../../errors/auth-error";
 import { useRegisterUserMutation } from "@src/redux/features/auth/authApi";
 import { notifySuccess, notifyError } from "@src/utils/toastConfig";
 import {
-  isFetchBaseQueryError,
-  isErrorWithMessage,
+  isErrorWithCustomDataServer,
 } from "@src/helpers/rtk-helpers";
 
 type Inputs = {
@@ -71,7 +70,7 @@ export const RegisterForm: FC = (): JSX.Element => {
         password: data.password,
       });
       if (res.error) {
-        if (isErrorWithMessage(res.error)) {
+        if (isErrorWithCustomDataServer(res.error)) {
           notifyError(res.error.data.errorMessage ?? "any error");
           if (res.error.data.errorName === "ServerFieldValidationError") {
             throw new ServerFieldValidationError({
