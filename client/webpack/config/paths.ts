@@ -30,6 +30,7 @@ const resolveModule = (resolveCb: typeof resolveApp, filePath: string) => {
 const appPaths: AppPaths = {
     appPath: resolveApp('.'),
     appDotenv: resolveApp('.env'),
+    appBuild: resolveApp(buildPath),
     appPublic: resolveApp('public'),
     appSrc: resolveApp('src'),
     appIndex: resolveModule(resolveApp, 'src/index'),
