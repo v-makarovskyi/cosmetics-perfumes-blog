@@ -1,0 +1,50 @@
+//hode.js core
+import path from "path";
+import fs from "fs";
+
+//import node_modules packages
+import chalk from "chalk";
+
+//import app modules
+import { getPublicUrlOrPath } from "../utils/getPublicUrlOrPath";
+
+//import types 'webpack.types.ts'
+import { type AppPaths } from "../webpack.types";
+
+const publicUrlOrPath = getPublicUrlOrPath();
+const buildPath = process.env.BUILD_PATH || "build";
+const appDirectory: string = fs.realpathSync(process.cwd());
+
+const resolveApp = (relativePath: string) =>
+  path.resolve(appDirectory, relativePath);
+
+const moduleExtensions: string[] = ["js", "mjs", "jsx", "ts", "tsx", "json"];
+
+const resolveModule = (resolveCb: typeof resolveApp, filePath: string) => {
+  const extension = moduleExtensions.find((ext) => {
+    return fs.existsSync(resolveCb(`${filePath}.${ext}`));
+  });
+  if (extension) {
+    return resolveCb(`${filePath}.${extension}`);
+  }
+  return resolveCb(`${filePath}.js`);
+};
+
+const appPaths: AppPaths = {
+    appPath: resolveApp('.'),
+    appDotenv: resolveApp('.env'),
+    appPublic: resolveApp('public'),
+    appSrc: resolveApp('src'),
+    appIndex: resolveModule(resolveApp, 'src/index'),
+    appTsConfig: resolveApp('tsconfig.json'),
+    appPkg: resolveApp('package.json'),
+    appNodeodules: resolveApp('node_modules'),
+    appWebppackCache: resolveApp('node_modules/.cache'),
+    appTsInfoFile: resolveApp('node_modules/.cache/tsconfig.tsbuildinfo'), 
+    publicUrlOrPath,
+    moduleExtensions
+}
+
+console.log('appPaths', appPaths);
+
+export { appPaths }
