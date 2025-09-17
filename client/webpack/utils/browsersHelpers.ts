@@ -22,7 +22,7 @@ const defaultBrowsers: { [x: string]: readonly string[] } = {
   ],
 };
 
-function shouldSetBrowsers(isInteractive: boolean) {
+function shouldSetBrowsers(isInteractive: boolean): Promise<boolean | prompts.Answers<string>> {
   if (!isInteractive) return Promise.resolve(true);
   const question: PromptsObjectType = {
     type: "confirm",
@@ -41,7 +41,7 @@ function checkBrowsers(
   dir: string,
   isInteractive: boolean,
   retry: boolean = true
-) {
+): Promise<string | string[]> {
   const current = browserslist.loadConfig({ path: dir });
   if (current !== void 0) return Promise.resolve(current);
 
@@ -77,7 +77,9 @@ function checkBrowsers(
         )
       );
       console.log();
-    });
+    })
+    .catch(() => {})
+    .then(() => checkBrowsers(dir, isInteractive, false))
   });
 }
 
