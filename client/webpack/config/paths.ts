@@ -2,9 +2,6 @@
 import path from "path";
 import fs from "fs";
 
-//import node_modules packages
-import chalk from "chalk";
-
 //import app modules
 import { getPublicUrlOrPath } from "../utils/getPublicUrlOrPath";
 
