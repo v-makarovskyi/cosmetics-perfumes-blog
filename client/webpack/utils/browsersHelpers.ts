@@ -2,14 +2,12 @@
 import path from "path";
 import fs from "fs";
 import os from "os";
-import { readFile } from "fs/promises";
 
 //import node_modules packages
 import { packageUp } from "package-up";
 import browserslist from "browserslist";
 import prompts from "prompts";
 import chalk from "chalk";
-//import yargs from 'yargs';
 
 //import types
 import type { PromptsObjectType } from "../webpack.types";
