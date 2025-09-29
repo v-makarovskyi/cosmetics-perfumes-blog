@@ -5,16 +5,18 @@ import fs from "fs";
 //import from node_mpdules
 import webpack from "webpack";
 import chalk from "chalk";
+import resolve from "resolve";
 
 //plugins
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import { InterpolateHtmlPlugin } from "../utils/plugins/interpolateHtmlPlugin";
+import forkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 
 import { appPaths } from "./paths";
 import { getModules } from "./modules";
 import { tsLoaderFormatter } from "../utils/ts-loader-utils/tsLoaderFormatter";
 import { createEnvHash } from "../utils/createEnvHash";
-import { InterpolateHtmlPlugin } from "../utils/plugins/interpolateHtmlPlugin";
 
 import { getClientEnvironment } from "./env";
 
@@ -25,8 +27,6 @@ import {
 } from "../../types/webpack.types";
 
 const useTS = fs.existsSync(appPaths.appTsConfig as string);
-
-
 
 //style Regexes and other for styles
 const cssRegex = /\.css$/;
@@ -40,8 +40,6 @@ const imageInlineSizeLimit = parseInt(
 export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
   const isDevelopment = webpackEnv === "development";
   const isProduction = webpackEnv === "production";
-
- 
 
   const env = getClientEnvironment(
     appPaths.publicUrlOrPath.slice(0, -1) as string
@@ -289,6 +287,35 @@ export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
         new MiniCssExtractPlugin({
           filename: "static/css/[name].[contenthash:8].css",
           chunkFilename: "static/css/[name].[contenthash:8].chunk.css",
+        }),
+      useTS &&
+        new forkTsCheckerWebpackPlugin({
+          async: isDevelopment,
+          typescript: {
+            typescriptPath: resolve.sync("typescript", {
+              basedir: appPaths.appNodeModules as string,
+            }),
+            configOverwrite: {
+              compilerOptions: {
+                sourceMap: true,
+                skipLibCheck: true,
+                inlineSourceMap: false,
+                declarationMap: false,
+                noEmit: true,
+                incremental: true,
+                tsBuildInfoFile: appPaths.appTsInfoFile as string,
+              },
+            },
+            context: appPaths.appPath as string,
+            mode: "write-references",
+            diagnosticOptions: {
+              syntactic: true,
+            },
+          },
+          issue: {
+            include: [{ file: "**/src/**/*.{ts,tsx}" }],
+          },
+          logger: "webpack-infrastructure"
         }),
     ],
 
