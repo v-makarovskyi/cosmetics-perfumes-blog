@@ -35,6 +35,7 @@ function getWebpackResolveAlias(opts: CompilerOptions = {}): ResolveOptions['ali
         return {
             '@src/*': path.join(appPaths.appSrc as string, '*'),
             '@svg/*': path.join(appPaths.appSrc as string, 'svg/*'),
+            '@public/*': path.join(appPaths.appPublic as string, '*'),
             '@images/*': path.join(appPaths.appPublic as string, 'images/*')
         }
     } else return {}
