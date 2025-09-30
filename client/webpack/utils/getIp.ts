@@ -8,6 +8,6 @@ function getIp() {
     .map((el) => el?.address)
     .join('')
 
-  getIp()
+  return ip
 }
 
