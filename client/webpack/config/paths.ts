@@ -6,7 +6,7 @@ import fs from "fs";
 import { getPublicUrlOrPath } from "../utils/getPublicUrlOrPath";
 
 //import types 'webpack.types.ts'
-import { type AppPaths } from "../webpack.types";
+import { type AppPaths } from "../../types/webpack.types";
 
 const publicUrlOrPath = getPublicUrlOrPath();
 const buildPath = process.env.BUILD_PATH || "build";
@@ -29,20 +29,21 @@ const resolveModule = (resolveCb: typeof resolveApp, filePath: string) => {
 
 const appPaths: AppPaths = {
     appPath: resolveApp('.'),
-    appDotenv: resolveApp('.env'),
+    dotenv: resolveApp('.env'),
     appBuild: resolveApp(buildPath),
     appPublic: resolveApp('public'),
+    appHtml: resolveApp('public/index.html'),
     appSrc: resolveApp('src'),
     appIndex: resolveModule(resolveApp, 'src/index'),
     appTsConfig: resolveApp('tsconfig.json'),
+    appJsConfig: resolveApp('jsconfig.json'),
     appPkg: resolveApp('package.json'),
-    appNodeodules: resolveApp('node_modules'),
-    appWebppackCache: resolveApp('node_modules/.cache'),
+    appNodeModules: resolveApp('node_modules'),
+    appWebpackCache: resolveApp('node_modules/.cache'),
     appTsInfoFile: resolveApp('node_modules/.cache/tsconfig.tsbuildinfo'), 
     publicUrlOrPath,
     moduleExtensions
 }
 
-console.log('appPaths', appPaths);
 
 export { appPaths }

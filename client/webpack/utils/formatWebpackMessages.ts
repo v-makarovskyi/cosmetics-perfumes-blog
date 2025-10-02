@@ -12,7 +12,8 @@ function formatMessage(messageObj: AppStatsErrorOrWarning) {
   let lines: any = [moduleIdentifier, moduleName, loc, message];
 
   if (lines && lines[3] && typeof lines[3] === "string") {
-    lines[3] = lines[3].split("\n");
+    lines[3] = lines[3].trim().split("\n");
+
     if (lines[3].length > 1) {
       lines[3][1] = chalk.bold.yellow(lines[3][1]);
     }
@@ -41,17 +42,26 @@ function formatMessage(messageObj: AppStatsErrorOrWarning) {
             chalk.bold("MODULE BUILD FAILED:")
           );
         }
+        if (line.indexOf("[eslint]") === 0) {
+          line = line.replace("[eslint]", "");
+          return line;
+        }
         return line;
       });
     }
   }
-  output += `${chalk.red.bold("Something went wrong")} ${chalk.bold.blue(
-    "in"
-  )} ${chalk.blueBright(lines[1])} ${chalk.bold.greenBright(
-    lines[2] ? lines[2] : ""
-  )}\n\n`;
+  const startInOutputWarning: string = lines[3][0].startsWith("MODULE");
+
+  output += `${chalk.red.bold(
+    `${
+      startInOutputWarning ? chalk.yellow("[WARNING]") : chalk.red("[ERROR]")
+    } Something went wrong`
+  )} ${chalk.bold.blue(lines[1] ? "in" : "")} ${chalk.blueBright(
+    lines[1] ? lines[1] : ""
+  )} ${chalk.bold.greenBright(lines[2] ? lines[2] : "")}\n`;
 
   output += `${lines[3].join("\n")}\n`;
+
   output += "-------------------------------------------------------";
   return output;
 }
