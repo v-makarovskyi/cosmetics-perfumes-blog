@@ -6,69 +6,52 @@ import type {
   AppStatsErrorOrWarning,
 } from "../../types/webpack.types";
 
-function formatMessage(messageObj: AppStatsErrorOrWarning) {
-  let output: string = "";
-  let { moduleIdentifier, moduleName, loc, message } = messageObj;
-  let lines: any = [moduleIdentifier, moduleName, loc, message];
-
-  if (lines && lines[3] && typeof lines[3] === "string") {
-    lines[3] = lines[3].trim().split("\n");
-
-    if (lines[3].length > 1) {
-      lines[3][1] = chalk.bold.yellow(lines[3][1]);
-    }
-    if (lines && lines[3] && Array.isArray(lines[3])) {
-      lines[3] = lines[3].map((line) => {
-        if (line.indexOf("Module not found") === 0) {
-          let colorLinePath = line.match(/\/home\/.+/g);
-          line = line
-            .replace(
-              "Module not found: Error: Can't resolve",
-              chalk.bold("NOT FOUND OR RESOLVE FILE: ")
-            )
-            .replace(colorLinePath, chalk.cyan.bold(colorLinePath));
-          return line;
-        }
-        if (line.indexOf("Module parse failed") === 0) {
-          line = line.replace(
-            "Module parse failed",
-            chalk.bold("PARSING ERROR in MODULE")
-          );
-          return line;
-        }
-        if (line.indexOf("Module build failed") === 0) {
-          line = line.replace(
-            "Module build failed",
-            chalk.bold("MODULE BUILD FAILED:")
-          );
-        }
-        if (line.indexOf("[eslint]") === 0) {
-          line = line.replace("[eslint]", "");
-          return line;
-        }
-        return line;
-      });
-    }
+function formatMsg(
+  message: AppStatsErrorOrWarning | AppStatsCompilations[] | string
+) {
+  console.log("formatWebpackMessage", message);
+  let lines: string[] | string = [];
+  if (typeof message === "string") {
+    lines = message.split("\n");
+  } else if ("message" in message) {
+    lines = message["message"].split("\n");
+  } else if (Array.isArray(message)) {
+    message.forEach((message) => {
+      if ("message" in message) {
+        lines = message["message"].split("\n");
+      }
+    });
   }
-  const startInOutputWarning: string = lines[3][0].startsWith("MODULE");
 
-  output += `${chalk.red.bold(
-    `${
-      startInOutputWarning ? chalk.yellow("[WARNING]") : chalk.red("[ERROR]")
-    } Something went wrong`
-  )} ${chalk.bold.blue(lines[1] ? "in" : "")} ${chalk.blueBright(
-    lines[1] ? lines[1] : ""
-  )} ${chalk.bold.greenBright(lines[2] ? lines[2] : "")}\n`;
+  //replace first line in parse filed error
+  //(example: 'Module parse failed: Unexpected token (17:4)\n' -->>   PARSING ERROR: Unexpected token (17:4))
+  if (
+    lines &&
+    typeof lines[0] === "string" &&
+    lines[0].startsWith("Module parse failed")
+  ) {
+    const loc = /\([0-9][0-9]?:[0-9][0-9]?\)/.exec(lines[0]);
+    lines[0] = lines[0]
+      .replace(/^Module parse failed/, chalk.red.bold("PARSING ERROR"))
+      .replace(loc ? loc[0] : "", loc ? chalk.bold.greenBright(loc[0]) : "");
+  }
 
-  output += `${lines[3].join("\n")}\n`;
+  if (
+    lines &&
+    typeof lines[0] === "string" &&
+    lines[0].indexOf("[eslint]") === 0
+  ) {
+    lines.shift();
+  }
 
-  output += "-------------------------------------------------------";
-  return output;
+  message = lines.join("\n");
+  return message.trim();
 }
 
 function formatWebpackMessages(json: AppStatsCompilations) {
-  const errors = json.errors?.map(formatMessage);
-  const warns = json.warnings?.map(formatMessage);
+  const errors = json.errors?.map(formatMsg);
+  const warns = json.warnings?.map(formatMsg);
+
   return {
     errors,
     warns,
