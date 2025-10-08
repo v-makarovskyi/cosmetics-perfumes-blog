@@ -9,7 +9,6 @@ import type {
 function formatMsg(
   message: AppStatsErrorOrWarning | AppStatsCompilations[] | string
 ) {
-  console.log("formatWebpackMessage", message);
   let lines: string[] | string = [];
   if (typeof message === "string") {
     lines = message.split("\n");
