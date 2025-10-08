@@ -7,68 +7,79 @@ type LintResult = import("eslint").ESLint.LintResult;
 
 const cwd = process.cwd();
 
-function isError(message: LintMessage) {
-  if (message.severity === 2 || message.fatal) {
-    return true;
-  }
-  return false;
-}
-
 function getRelativePath(filepath: string) {
   return path.relative(cwd, filepath);
 }
 
+function isError(msg: LintMessage) {
+  if (msg.severity === 2 || msg.fatal) return true;
+  return false;
+}
+
 function eslintFormatter(results: LintResult[]) {
-  let output: string = "\n";
-  let hasError: boolean = false;
-  let reportContainsRuleErrorsIds: boolean = false;
+  let output = "\n";
+  let hasError = false;
+  let repportContainsRuleErrorIds = false;
 
   results.forEach((result) => {
-    let messagesArray: LintMessage[] | string[][];
+    let messagesArray: string[][] | LintMessage[];
     messagesArray = result.messages;
+
     if (messagesArray.length === 0) return;
 
     messagesArray = messagesArray.map((message) => {
-      let messsageType: "error" | "warn";
+      let messageType: "error" | "warning";
       if (isError(message)) {
+        messageType = "error";
         hasError = true;
-        messsageType = "error";
         if (message.ruleId) {
-          reportContainsRuleErrorsIds = true;
+          repportContainsRuleErrorIds = true;
         }
       } else {
-        messsageType = "warn";
+        messageType = "warning";
       }
+
       let line = message.line.toString() || "0";
       if (message.column) {
         line += ":" + message.column;
       }
-      let position = "Line " + line + ":";
+      let position = "Line " + line;
 
       return [
         "",
         position,
-        messsageType,
+        messageType,
         message.message.replace(/\.$/, ""),
         chalk.underline(message.ruleId || ""),
       ];
     });
+
     if (hasError) {
-      messagesArray = messagesArray.filter((m) => m[2] === "error");
+      messagesArray = messagesArray.filter((message) => message[2] === "error");
     }
+
     messagesArray.forEach((m) => {
-      m[4] = m[2] === "error" ? chalk.red(m[4]) : chalk.yellow[m[4]];
+      m[4] = m[2] === "error" ? chalk.red(m[4]) : chalk.yellow(m[4]);
       m.splice(2, 1);
     });
+
     let messageTable = table(messagesArray, {
       align: ["l", "l", "l"],
     });
 
-    output += chalk.blueBright(
-      `[eslint] ${getRelativePath(result.filePath)}\n`
-    );
+    output += `${chalk.yellowBright.bold("[custom--lint]")} ${chalk.blueBright(
+      getRelativePath(result.filePath)
+    )}\n`;
     output += `${messageTable}\n\n`;
   });
+
+  if (repportContainsRuleErrorIds) {
+    output +=
+      "Стоит обратить внимание на " +
+      chalk.red.bold.underline("ключевые слова") +
+      ", чтобы узнать больше о каждой ошибке " + chalk.bold.red('ESLint') + ".";
+  }
+
   return output;
 }
 
