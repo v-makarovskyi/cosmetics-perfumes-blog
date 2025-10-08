@@ -12,11 +12,13 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { InterpolateHtmlPlugin } from "../utils/plugins/interpolateHtmlPlugin";
 import forkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import EslintWebpackPlugin from "eslint-webpack-plugin";
 
 import { appPaths } from "./paths";
 import { getModules } from "./modules";
 import { tsLoaderFormatter } from "../utils/ts-loader-utils/tsLoaderFormatter";
 import { createEnvHash } from "../utils/createEnvHash";
+import { eslintFormatter } from "../utils/lint-utils/eslintFormatter";
 
 import { getClientEnvironment } from "./env";
 
@@ -44,7 +46,7 @@ export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
   const env = getClientEnvironment(
     appPaths.publicUrlOrPath.slice(0, -1) as string
   );
-  console.log("env", env.raw);
+
   const modules = getModules();
 
   return {
@@ -68,7 +70,7 @@ export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
           appPaths.appJsConfig as string,
         ].filter((f) => fs.existsSync(f)),
       },
-      cacheDirectory: appPaths.appWebppackCache as string,
+      cacheDirectory: appPaths.appWebpackCache as string,
     },
 
     output: {
@@ -100,6 +102,11 @@ export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
     module: {
       strictExportPresence: true,
       rules: [
+        {
+          test: /\.(js|mjs|jsx|ts|tsx|css)$/,
+          enforce: "pre",
+          loader: require.resolve("source-map-loader"),
+        },
         {
           test: /\.(t|j)sx?$/,
           exclude: /node_modules/,
@@ -315,8 +322,21 @@ export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
           issue: {
             include: [{ file: "**/src/**/*.{ts,tsx}" }],
           },
-          logger: "webpack-infrastructure"
+          logger: "webpack-infrastructure",
         }),
+      new EslintWebpackPlugin({
+        extensions: ["js", "mjs", "jsx", "ts", "tsx"],
+        context: appPaths.appSrc as string,
+        eslintPath: require.resolve("eslint"),
+        configType: "flat",
+        cache: true,
+        cacheLocation: path.resolve(
+          appPaths.appNodeModules as string,
+          ".cache/.eslintcache"
+        ),
+        formatter: eslintFormatter,
+        cwd: appPaths.appSrc as string,
+      }),
     ],
 
     resolve: {
