@@ -38,6 +38,28 @@ function formatMsg(
   if (
     lines &&
     typeof lines[0] === "string" &&
+    lines[0].startsWith("Module build failed")
+  ) {
+    lines[0] = lines[0].replace(
+      /^Module build failed/,
+      chalk.red.bold("MODULE BUILD ERROR")
+    );
+  }
+
+  if (
+    lines &&
+    typeof lines[0] === "string" &&
+    lines[0].indexOf("Module not found") === 0
+  ) {
+    lines[0] = lines[0].replace(
+      /^Module not found: Error: Can't resolve/,
+      chalk.red.bold("CAN'T FIND OR RESOLVE FILE:")
+    );
+  }
+
+  if (
+    lines &&
+    typeof lines[0] === "string" &&
     lines[0].indexOf("[eslint]") === 0
   ) {
     lines.shift();
