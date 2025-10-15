@@ -9,10 +9,12 @@ import resolve from "resolve";
 
 //plugins
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { InterpolateHtmlPlugin } from "../utils/plugins/interpolateHtmlPlugin";
 import forkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import EslintWebpackPlugin from "eslint-webpack-plugin";
+import TerserPlugin from "terser-webpack-plugin";
 
 import { appPaths } from "./paths";
 import { getModules } from "./modules";
@@ -56,6 +58,7 @@ export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
     devtool: isProduction
       ? "source-map"
       : isDevelopment && "cheap-module-source-map",
+
     entry: appPaths.appIndex,
 
     cache: {
@@ -77,17 +80,20 @@ export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
       path: appPaths.appBuild as string,
       pathinfo: isDevelopment,
       publicPath: appPaths.publicUrlOrPath as string,
+
       filename: isProduction
         ? "static/js/[name].[contenthash:8].js"
         : isDevelopment
-        ? "static/js/bundle.js"
+        ? "static/js/[name].js"
         : undefined,
+
       chunkFilename: isProduction
         ? "static/js/[name].[contenthash:8].chunk.js"
         : isDevelopment
         ? "static/js/[name].chunk.js"
         : undefined,
-      assetModuleFilename: "static/media/[name].[hash:8][ext]",
+
+      assetModuleFilename: "static/media/[name].[hash][ext]",
       devtoolModuleFilenameTemplate: isProduction
         ? (info: { absoluteResourcePath: string }) =>
             path
@@ -132,6 +138,13 @@ export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
           },
         },
         {
+          test: /\.(ttf|otf|woff|woff2)$/,
+          type: "asset",
+          generator: {
+            filename: "static/media/fonts/[name].[hash:8][ext]",
+          },
+        },
+        {
           test: [/\.avif$/],
           type: "asset",
           mimetype: "image/avif",
@@ -143,6 +156,10 @@ export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
           generator: {
             filename: "static/media/images/[name].[hash:8][ext]",
           },
+        },
+        {
+          test: /\.svg$/,
+          type: "asset/inline",
         },
         {
           test: [/\.jpe?g$/, /\.bmp$/, /\.png$/],
@@ -324,7 +341,8 @@ export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
           },
           logger: "webpack-infrastructure",
         }),
-      new EslintWebpackPlugin({
+
+      /*   new EslintWebpackPlugin({
         extensions: ["js", "mjs", "jsx", "ts", "tsx"],
         context: appPaths.appSrc as string,
         eslintPath: require.resolve("eslint"),
@@ -336,11 +354,66 @@ export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
         ),
         formatter: eslintFormatter,
         cwd: appPaths.appSrc as string,
-      }),
+      }), */
     ],
 
+    optimization: {
+      minimize: isProduction,
+      runtimeChunk: "single",
+      splitChunks: {
+        chunks: "all",
+        maxInitialRequests: Infinity,
+        minSize: 10000,
+        cacheGroups: {
+          defaultVendors: {
+            test: /[\\/]node_modules[\\/]/,
+            name(
+              module: webpack.Module,
+              chunks: webpack.Chunk,
+              casheGroupKey: string
+            ) {
+              const packageName =
+                module.context?.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/) ??
+                "package";
+              return `${casheGroupKey}~npm.${packageName[1].replace("@", "")}`;
+            },
+          },
+        },
+      },
+
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            parse: {
+              ecma: 2020,
+            },
+            compress: {
+              ecma: 5,
+              comparisons: false,
+              dead_code: true,
+              directives: true,
+              drop_debugger: true,
+              drop_console: ["debug", "info"],
+              inline: 2,
+            },
+            mangle: {
+              safari10: true,
+            },
+            output: {
+              ecma: 5,
+              comments: false,
+              ascii_only: true,
+            },
+          },
+        }),
+        new CssMinimizerPlugin(),
+      ],
+    },
+
     resolve: {
-      modules: ["node_modules", appPaths.appNodeModules as string],
+      modules: ["node_modules", appPaths.appNodeModules as string].concat(
+        modules.additionalModulePath || []
+      ),
       extensions: Array.isArray(appPaths.moduleExtensions)
         ? appPaths.moduleExtensions
             .map((ext) => `.${ext}`)
@@ -352,7 +425,9 @@ export const config = (webpackEnv: WebpackConfigEnv): WebpackConfiguration => {
     infrastructureLogging: {
       level: "error",
     },
+
     //stats: "errors-warnings",
     stats: "none",
+    performance: false,
   };
 };
