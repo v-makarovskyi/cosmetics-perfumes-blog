@@ -45,5 +45,4 @@ const appPaths: AppPaths = {
     moduleExtensions
 }
 
-
 export { appPaths }
