@@ -21,9 +21,10 @@ export default defineConfig([
     extends: [css.configs.recommended],
   },
   {
-    files: ["**/*.{tsx, jsx}"],
+    files: ["**/*.{js,ts,tsx,jsx}"],
     rules: {
       "react/react-in-jsx-scope": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
     },
   },
   {
