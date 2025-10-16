@@ -1,39 +1,31 @@
 {
   "compilerOptions": {
     "downlevelIteration": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "strict": true,
     "sourceMap": true,
     "noImplicitAny": false,
     "outDir": "destination",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "target": "ES2015",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "jsx": "react-jsx",
     "lib": ["ES2015", "ES2017", "ESNext", "DOM", "ES5", "ES2018", "WebWorker"],
     "types": ["node", "jest", "express"],
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": ["node_modules/@types", "./types/main.d.ts"],
     "paths": {
-      "*": ["node_modules/@types/*", "*"],
-      "@src/*": ["./src/*"],
-      "@svg/*": ["./src/svg/*"],
-      "@public/*": ["./public/*"]
+      "@src/*": ["./*"],
+      "@components/*": ["./components/*"],
+      "@svg/*": ["./svg/*"],
+      "@public/*": ["./public/*"],
+      "@media/*": ["./media/*"],
+      "@client_types/*": ["../types/*"]
     },
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "exclude": ["node_modules"],
-  "include": [
-    "./types/**/*.d.ts",
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
-    "./src/**/*.jsx",
-    "./src/**/*.js",
-    "webpack.config.dev.js",
-    "webpack.config.js",
-    "index.tsx",
-  ]
+  "include": ["webpack/**/*", "src/**/*", "types/**/*"]
 }

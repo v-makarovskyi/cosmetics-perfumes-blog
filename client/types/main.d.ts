@@ -1,31 +1,54 @@
-export type Wishlist = {
-  id: string;
-  userId: string;
-};
-
-export type RefreshToken = {
-  id: string;
-  hashed_token: string;
-  userId: string;
-  revoked: boolean;
-  created_at: string;
-  updated_at: string;
-  expire_at: string;
-};
-
-export interface User {
-  message: string;
-  userData: {
-    id: string;
-    name: string;
-    email: string;
-    password: string;
-    is_admin: boolean;
-    wishlist?: Wishlist;
-    refresh_token: RefreshToken[];
-    created_at: string;
-    updated_at: string;
-  };
+declare namespace NodeJS {
+  interface ProcessEnv {
+    NODE_ENV: "development" | "production" | "test";
+    HOST: string;
+    PORT: string;
+  }
 }
 
+declare module "bfj" {
+  function write(
+    path: string,
+    data: object | undefined,
+    options?: { [x: string]: any }
+  ): Promise<any>;
+}
 
+declare module "*.png" {
+  const value: string;
+  export default value;
+}
+
+declare module "*.avif" {
+  const value: string;
+  export default value;
+}
+
+declare module "*.jpeg" {
+  const value: string;
+  export default value;
+}
+
+declare module "*.webp" {
+  const value: string;
+  export default value;
+}
+
+declare module "*.jpg" {
+  const value: string;
+  export default value;
+}
+
+declare module "*.gif" {
+  const value: string;
+  export default value;
+}
+
+declare module "*.svg" {
+  import * as React from "react";
+  export const ReactComponent: React.FC<
+    React.SVGProps<SVGAElement> & { title?: string }
+  >;
+  const value: string;
+  export default value;
+}
