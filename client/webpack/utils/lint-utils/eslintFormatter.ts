@@ -54,10 +54,6 @@ function eslintFormatter(results: LintResult[]) {
       ];
     });
 
-    if (hasError) {
-      messagesArray = messagesArray.filter((message) => message[2] === "error");
-    }
-
     messagesArray.forEach((m) => {
       m[4] = m[2] === "error" ? chalk.red(m[4]) : chalk.yellow(m[4]);
       m.splice(2, 1);
@@ -77,7 +73,9 @@ function eslintFormatter(results: LintResult[]) {
     output +=
       "Стоит обратить внимание на " +
       chalk.red.bold.underline("ключевые слова") +
-      ", чтобы узнать больше о каждой ошибке " + chalk.bold.red('ESLint') + ".";
+      ", чтобы узнать больше о каждой ошибке " +
+      chalk.bold.red("ESLint") +
+      ".";
   }
 
   return output;

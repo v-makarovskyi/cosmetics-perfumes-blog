@@ -7,7 +7,8 @@ function getIp() {
     .filter((val) => val?.family === "IPv4" && !val.internal)
     .map((el) => el?.address)
     .join('')
-
+    
   return ip
 }
 
+export { getIp }
