@@ -1,0 +1,25 @@
+@use "../utils/" as u;
+
+.input {
+  padding-left: 26px;
+  padding-right: 26px;
+  height: 56px;
+  width: 100%;
+  background-color: u.$white;
+  color: u.$black;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.3;
+  border: 1px solid u.$border-input;
+
+  &::placeholder {
+    color: u.$placeholder-1;
+  }
+
+  &:focus {
+    border-color: u.$black;
+    &::placeholder {
+      opacity: 0;
+    }
+  }
+}

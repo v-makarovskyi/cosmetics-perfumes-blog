@@ -1,0 +1,261 @@
+@use "../../utils/" as u;
+
+.single-page {
+  padding-top: 20px;
+  padding-bottom: 10px;
+
+  @include u.bp-up(md) {
+    padding-bottom: 120px;
+    padding-top: 40px;
+  }
+
+  &__top {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  &__category {
+    margin-bottom: 6px;
+
+    & span {
+      font-size: 20px;
+      color: u.$primary;
+      display: inline-block;
+    }
+  }
+
+  &__title {
+    margin-bottom: 12px;
+    line-height: 1.1;
+
+    @include u.bp-down(md) {
+      font-size: 28px;
+    }
+    @include u.bp-up(md) {
+      line-height: 1.2;
+    }
+  }
+
+  &__meta {
+    margin-bottom: 50px;
+    font-size: 14px;
+
+    @include u.bp-down(md) {
+      margin-bottom: 30px;
+
+      & span:last-child {
+        display: none;
+      }
+    }
+
+    @include u.bp-up(xxl) {
+      font-size: 16px;
+    }
+
+    & span:not(:last-child) {
+      position: relative;
+      margin-right: 10px;
+      padding-right: 10px;
+      @include u.bp-down(md) {
+        margin-right: 5px;
+        padding-right: 5px;
+      }
+      & svg {
+        margin-right: 4px;
+        translate: 0px -3px;
+        @include u.bp-down(md) {
+          height: 15px;
+          translate: 0px -1px;
+        }
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: 20px;
+        background-color: u.$placeholder-1;
+        top: 3px;
+        right: 0;
+        @include u.bp-down(md) {
+          height: 16px;
+        }
+      }
+    }
+  }
+
+  &__content {
+    @include u.bp-up(lg) {
+      margin-right: 80px;
+    }
+  }
+
+  &__img-container {
+    & img {
+      margin-bottom: 40px;
+      width: 100%;
+
+      @include u.bp-up(md) {
+        margin-bottom: 60px;
+      }
+    }
+  }
+
+  &__description {
+    @include u.mix-fluid-text(20, 16);
+    line-height: 1.6;
+
+    & > :nth-child(1)::first-letter {
+      margin-right: 10px;
+      font-size: 90px;
+      font-weight: 500;
+      color: u.$primary;
+      text-align: center;
+      float: left;
+      text-transform: capitalize;
+    }
+
+    & > :nth-child(3) {
+      margin-top: 32px;
+      margin-bottom: 22px;
+    }
+
+    & > :nth-child(5) {
+      margin-top: 40px;
+      background-color: u.$primary;
+      color: u.$white;
+      font-size: 18px;
+      line-height: 1.5;
+      font-style: italic;
+      letter-spacing: 1px;
+
+      padding: 25px 40px;
+      margin-bottom: 50px;
+
+      @include u.bp-up(md) {
+        margin-bottom: 60px;
+
+        padding: 40px 60px;
+      }
+
+      & cite {
+        position: relative;
+        font-style: normal;
+        padding-left: 60px;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 12px;
+          left: 0;
+          width: 40px;
+          height: 1px;
+          background-color: u.$white;
+        }
+      }
+    }
+  }
+
+  &__share-wrapper {
+    padding-top: 21px;
+    padding-bottom: 33px;
+    border-bottom: 1px solid rgba($color: u.$black, $alpha: 0.1);
+  }
+
+  &__share {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    column-gap: 4px;
+
+    & > span {
+      font-size: 16px;
+      font-weight: 500;
+      color: u.$black;
+    }
+    & a {
+      @include u.mix-flex-center($isInline: true);
+      @include u.mix-square(35px);
+      border: 1px solid rgba($color: u.$black, $alpha: 0.1);
+
+      & svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  &__tags.tagscloud {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+    & span {
+      font-size: 16px;
+      font-weight: 500;
+      color: u.$black;
+    }
+    & a {
+      display: inline-block;
+      padding: 6px 10px;
+      width: max-content;
+      border: 1px solid rgba($color: u.$black, $alpha: 0.1);
+    }
+  }
+
+  &__navigation {
+    display: none;
+    @include u.bp-up(md) {
+      position: relative;
+      padding: 35px 0 35px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 30px;
+        left: 50%;
+        height: 90px;
+        width: 1px;
+        background-color: rgba($color: u.$black, $alpha: 0.1);
+    }
+
+    & > :first-child {
+      & svg {
+        rotate: 180deg;
+      }
+    }
+
+    &-item {
+      display: flex;
+      align-items: center;
+      flex: 0 1 40%;
+      column-gap: 20px;
+
+      &--right {
+        text-align: right;
+      }
+    }
+
+    &-icon {
+        & svg {
+            color: u.$black;
+        }
+    }
+
+    &-content {
+        & span {
+            display: inline-block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+    }
+
+    &-title {
+        font-weight: 500;
+        line-height: 1.2;
+    }
+  }
+}

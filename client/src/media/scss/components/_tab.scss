@@ -1,0 +1,19 @@
+@use '../utils/' as u;
+
+/*----------------------------------------*/
+/*  TAB styles
+/*----------------------------------------*/
+
+.tab {
+    & .nav-tabs {
+        margin: 0;
+        padding: 0;
+        border: none;
+
+        & .nav-link {
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+    }
+}

@@ -1,0 +1,67 @@
+@use "../../utils/" as u;
+
+.blog-grid-area {
+  padding-top: 50px;
+  padding-bottom: 70px;
+
+  @include u.bp-up(md) {
+    padding-top: 80px;
+    padding-bottom: 120px;
+  }
+
+  &__wrapper {
+    @include u.bp-up(xl) {
+      margin-right: 64px;
+    }
+  }
+
+  &__top {
+    margin-bottom: 40px;
+    border: 1px solid rgba($color: u.$black, $alpha: 0.1);
+    padding: 6px 20px 6px 25px;
+
+    &-result {
+      & p {
+        color: u.$placeholder-1;
+        margin-bottom: 0;
+      }
+    }
+
+    &-tab {
+      & .nav-tabs {
+        & .nav-link {
+          position: relative;
+          color: u.$placeholder-1;
+          font-size: 20px;
+
+          &#nav-grid-tab {
+            translate: 0 -1px;
+
+            & > svg {
+              translate: 0 1px;
+            }
+          }
+
+          &:not(:last-child) {
+            padding-right: 13px;
+            margin-right: 13px;
+
+            &::after {
+              content: "";
+              position: absolute;
+              top: 5px;
+              right: 0;
+              height: 22px;
+              width: 1px;
+              background-color: rgba($color: u.$black, $alpha: 0.1);
+            }
+          }
+
+          &.active {
+            color: u.$black;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@use "./colors" as clrs;
+
+$base-ff: "Jost";
+$border: 1px solid var(--color-border-standart);
+
+:root {
+  @each $color, $shades in clrs.$colors {
+    @each $key, $value in $shades {
+      --color-#{$color}-#{$key}: #{$value};
+    }
+  }
+
+  --border: #{$border}; 
+
+  --font-family-base: #{$base-ff};
+}

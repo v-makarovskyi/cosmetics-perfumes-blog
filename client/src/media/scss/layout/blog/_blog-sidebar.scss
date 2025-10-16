@@ -1,0 +1,155 @@
+@use "../../utils/" as u;
+
+.blog-sidebar {
+  margin-top: 50px;
+  position: sticky;
+  top: 120px;
+
+  @include u.bp-up(lg) {
+    margin-top: 0;
+  }
+
+  @include u.bp-up(xl) {
+    margin-left: -24px;
+  }
+
+  &__title {
+    cursor: pointer;
+  }
+
+  &__search {
+    position: relative;
+  }
+
+  &__widget {
+    $self: &;
+
+    margin-bottom: 35px;
+
+    &-content {
+      padding: 25px 25px 30px;
+      border: 1px solid rgba($color: u.$black, $alpha: 0.1);
+    }
+
+    &-list {
+      margin: 0;
+      padding: 0;
+    }
+
+    &-item {
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      &:last-child {
+        & > .blog-sidebar__widget-latest {
+          margin: 0;
+          padding: 0;
+          border: none;
+        }
+      }
+
+      & > a {
+        padding-left: 15px;
+        position: relative;
+        display: block;
+
+        &::before {
+          content: "";
+          position: absolute;
+          @include u.mix-square(5px);
+          border-radius: 50%;
+          background-color: u.$placeholder-1;
+          top: 8px;
+          left: 0;
+        }
+      }
+
+      &-qty {
+        float: right;
+      }
+    }
+
+    &-latest {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba($color: u.$black, $alpha: 0.1);
+
+      display: flex;
+      align-items: center;
+      column-gap: 25px;
+
+      &-img-container {
+        margin: 0;
+        padding: 0;
+
+        & img {
+          width: 80px;
+          height: 70px;
+          object-fit: cover;
+        }
+      }
+
+      &-title {
+        margin: 0;
+      }
+
+      &-meta {
+        font-size: 15px;
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+.widget-tags {
+
+  & > div {
+    padding-top: 24px;
+    border-top: 1px solid rgba($color: u.$black, $alpha: 0.1);
+
+    & > a {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 5px 7px;
+      border: 1px solid rgba($color: u.$black, $alpha: 0.1);
+      font-size: 16px;
+
+      @include u.mix-hover {
+        cursor: pointer;
+        background: u.$primary;
+        color: u.$white;
+      }
+    }
+  }
+}
+
+.author-widget {
+  &__wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 17px;
+    align-items: center;
+  }
+
+  &__img-container {
+    & img {
+      object-fit: cover;
+      border-radius: 50%;
+      @include u.mix-square(160px);
+    }
+  }
+
+  &__name {
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  &__professional {
+    font-size: 15px;
+  }
+
+  &__description {
+    text-align: center;
+  }
+}
