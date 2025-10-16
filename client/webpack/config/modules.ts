@@ -13,32 +13,48 @@ function getAdditionalModulePath(opts: CompilerOptions) {
 
   const resolvedBasePath = path.resolve(appPaths.appPath as string, baseUrl);
 
-  if (path.relative(appPaths.appNodeModules as string, resolvedBasePath) === "")
+  if (
+    path.relative(appPaths.appNodeModules as string, resolvedBasePath) === ""
+  ) {
     return null;
-  if (path.relative(appPaths.appPath as string, resolvedBasePath) === "")
+  }
+
+  if (path.relative(appPaths.appPath as string, resolvedBasePath) === "") {
     return null;
+  }
+
+  if (path.relative(appPaths.appSrc as string, resolvedBasePath) === "") {
+    return [appPaths.appSrc as string];
+  }
 
   throw new Error(
     chalk.red.bold(
-      `В данном проекте в качестве baseUrl в tsconfig.json можно установить только базовый каталог пректа.`
+      `В данном проекте в качестве baseUrl в tsconfig.json можно установить только базовый каталог пректа или каталог 'src'.`
     )
   );
 }
 
-function getWebpackResolveAlias(opts: CompilerOptions = {}): ResolveOptions['alias'] {
-    const baseUrl = opts.baseUrl
-    if(!baseUrl) return {}
+function getWebpackResolveAlias(
+  opts: CompilerOptions = {}
+): ResolveOptions["alias"] {
+  const baseUrl = opts.baseUrl;
+  if (!baseUrl) return {};
 
-    const resolvedBasePath = path.resolve(appPaths.appPath as string, baseUrl)
+  const resolvedBasePath = path.resolve(appPaths.appPath as string, baseUrl);
 
-    if(path.relative(appPaths.appPath as string, resolvedBasePath) === '') {
-        return {
-            '@src/*': path.join(appPaths.appSrc as string, '*'),
-            '@svg/*': path.join(appPaths.appSrc as string, 'svg/*'),
-            '@public/*': path.join(appPaths.appPublic as string, '*'),
-            '@images/*': path.join(appPaths.appPublic as string, 'images/*')
-        }
-    } else return {}
+  if (
+    path.relative(appPaths.appPath as string, resolvedBasePath) === "" ||
+    path.relative(appPaths.appSrc as string, resolvedBasePath) === ""
+  ) {
+    return {
+      "@src/*": path.join(appPaths.appSrc as string, "*"),
+      "@components/*": path.join(appPaths.appSrc as string, "components/*"),
+      "@media/*": path.join(appPaths.appSrc as string, "media/*"),
+      "@svg/*": path.join(appPaths.appSrc as string, "svg/*"),
+      "@public/*": path.join(appPaths.appPublic as string, "*"),
+      "@client_types/*": path.join(appPaths.appPath as string, 'types/*')
+    };
+  } else return {};
 }
 
 function getModules() {
@@ -60,9 +76,8 @@ function getModules() {
     ).config;
   }
   config = config || {};
-  
+
   const options = config.compilerOptions || {};
- 
 
   const additionalModulePath = getAdditionalModulePath(options);
 
