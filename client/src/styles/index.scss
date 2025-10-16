@@ -1,17 +1,17 @@
-@import "~bootstrap/scss/functions";
+@import "bootstrap/scss/functions";
 
-@import "~bootstrap/scss/variables";
+@import "bootstrap/scss/variables";
 
-@import "../../node_modules/bootstrap/scss/mixins";
+@import "bootstrap/scss/mixins";
 
-@import "../../node_modules/bootstrap/scss/maps";
+@import "bootstrap/scss/maps";
 
-@import "~bootstrap/scss/containers";
-@import "~bootstrap/scss/grid";
-@import "../../node_modules/bootstrap/scss/bootstrap-utilities.scss";
-@import "~bootstrap/scss/root";
-@import "~bootstrap/scss/reboot";
-@import "~bootstrap/scss/_nav.scss";
-@import "~bootstrap/scss/_transitions.scss";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/bootstrap-utilities.scss";
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/_nav.scss";
+@import "bootstrap/scss/_transitions.scss";
 
-@import "../../public/scss/main.scss";
+@import "../media/scss/main.scss";
