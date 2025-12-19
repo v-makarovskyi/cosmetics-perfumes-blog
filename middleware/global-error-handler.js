@@ -9,23 +9,7 @@ const globalErrorHandler = (error, req, res, next) => {
   let errorMessage = error.message;
   let errorMessagesArray = [];
 
-  if (error.name === "TokenExpiredError") {
-    let queryString;
-    let params = req.body["targetUrl"].split("/").filter(Boolean);
-    let paramsSlicedArray = [];
-    const SIZE = 2;
-    for (let i = 0; i < params.length; i += SIZE) {
-      paramsSlicedArray.push(params.slice(i, i + SIZE));
-    }
-
-    params = Object.fromEntries(paramsSlicedArray);
-    queryString = Object.keys(params)
-      .map((key) => key + "=" + params[key])
-      .join("&");
-
-    res.redirect(`/api/auth/refresh_token?${queryString}`);
-    return;
-  } else if (error.validationErrors instanceof Result) {
+  if (error.validationErrors && error.validationErrors instanceof Result) {
     error = new ServerFieldValidationError(error);
     errorName = error.name;
     statusCode = error.statusCode;

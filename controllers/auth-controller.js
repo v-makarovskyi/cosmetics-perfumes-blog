@@ -1,4 +1,3 @@
-const router = require("express").Router();
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
@@ -8,11 +7,13 @@ const {
   addRefreshToketToWhiteList,
   findRefreshToken,
   makeTokenInvalid,
+  deleteAllRefreshTokens,
 } = require("../services/authServices");
 const {
   createUserWithEmailAndPassword,
   findUserById,
   findUserByEmail,
+  createWishlistForUser,
 } = require("../services/userServices");
 
 exports.register = [
@@ -22,7 +23,7 @@ exports.register = [
     .withMessage('Поле "NAME" не должно быть пустым')
     .isLength({ min: 4, max: 21 })
     .withMessage(
-      'Поле "NAME" не должно быть меньше 2-х не должно превышать 21 символ'
+      'Поле "NAME" не должно быть меньше 3-х не должно превышать 21 символ'
     ),
   body("email")
     .trim()
@@ -37,35 +38,31 @@ exports.register = [
     .withMessage("Пароль должен содержать не менее 6-ти символов"),
 
   asyncHandler(async (req, res, next) => {
-    try {
-      const errors = validationResult(req);
+    const errors = validationResult(req);
 
-      const targetUser = {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-      };
+    const targetUser = {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    };
 
-      if (!errors.isEmpty()) {
-        return next({ validationErrors: errors, statusCode: 400 });
-      }
+    if (!errors.isEmpty()) {
+      return next({ validationErrors: errors, statusCode: 400 });
+    }
 
-      const existUser = await findUserByEmail(targetUser.email);
+    const existUser = await findUserByEmail(targetUser.email);
 
-      if (existUser) {
-        next(new AuthError(401, "🚫 Данный email уже используется! 🚫"));
-      } else {
-        const newUser = await createUserWithEmailAndPassword(targetUser);
+    if (existUser) {
+      next(new AuthError(401, "🚫 Данный email уже используется! 🚫"));
+    } else {
+      const newUser = await createUserWithEmailAndPassword(targetUser);
 
-        const { password, ...other } = newUser
+      const { password, ...other } = newUser;
 
-        res.status(201).json({
-          message: `Пользователь ${targetUser.name} успешно создан`,
-          userData: other,
-        });
-      }
-    } catch (error) {
-      console.error("ERROR-AuthController", error);
+      res.status(201).json({
+        message: `Пользователь ${targetUser.name} успешно создан`,
+        userData: other,
+      });
     }
   }),
 ];
@@ -84,109 +81,77 @@ exports.login = [
     .withMessage("Пароль должен содержать не менее 6-ти символов"),
 
   asyncHandler(async (req, res, next) => {
-    try {
-      const errors = validationResult(req);
-      const targetUser = {
-        email: req.body.email,
-        password: req.body.password,
-      };
+    const errors = validationResult(req);
+    const targetUser = {
+      email: req.body.email,
+      password: req.body.password,
+    };
 
-      if (!errors.isEmpty()) {
-        next({ validationErrors: errors, statusCode: 400 });
-      }
-
-      const existUser = await findUserByEmail(targetUser.email);
-      if (!existUser) {
-        return next(new AuthError(401, "🚫 Введите валидные данные(email) 🚫"));
-      }
-
-      const mathedPassword = await bcrypt.compare(
-        targetUser.password,
-        existUser.password
-      );
-      if (!mathedPassword) {
-        return next(
-          new AuthError(401, "🚫 Введите валидные данные(password) 🚫")
-        );
-      }
-
-      const { accessToken, refreshToken } = generateTokens(existUser);
-      await addRefreshToketToWhiteList({
-        refreshToken,
-        userId: existUser.id,
-      });
-
-      res
-        .cookie("accessToken", accessToken, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "strict",
-        })
-        .cookie("refreshToken", refreshToken, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "strict",
-        });
-
-      const { password, ...userData } = existUser;
-
-      res.status(200).json({
-        message: "Вход в систему выполнен успешно!",
-        userData,
-      });
-    } catch (error) {
-      console.error(error);
+    if (!errors.isEmpty()) {
+      next({ validationErrors: errors, statusCode: 400 });
     }
+
+    const existUser = await findUserByEmail(targetUser.email);
+    if (!existUser) {
+      next(new AuthError(401, "🚫 Введите валидные данные(email) 🚫"));
+    }
+
+    const mathedPassword = await bcrypt.compare(
+      targetUser.password,
+      existUser.password
+    );
+    if (!mathedPassword) {
+      return next(
+        new AuthError(401, "🚫 Введите валидные данные(password) 🚫")
+      );
+    }
+
+    await createWishlistForUser(existUser);
+
+    const { accessToken, refreshToken } = generateTokens(existUser);
+
+    await addRefreshToketToWhiteList({
+      refreshToken,
+      userId: existUser.id,
+    });
+
+    const { id, name, ...userData } = existUser;
+
+    res
+      .cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "strict",
+        secure: false,
+        priority: "high",
+      })
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: true,
+        priority: "high",
+      });
+
+    res.status(200).json({
+      message: "Вход в систему выполнен успешно!",
+      id,
+      name,
+    });
   }),
 ];
 
-exports.get_refresh_token = asyncHandler(async (req, res, next) => {
-  
-  let address = Object.entries(req.query).map(el => el.join('/')).join('/')
-  console.log('address', address);
+exports.logout = async (req, res, next) => {
+  const refreshToken = req.cookies["refreshToken"];
 
-  const { refreshToken } = req.cookies;
-
-  if (!refreshToken) {
-    return next(
-      new AuthError(400, "RefreshToken должен присутствовать обязательно!")
-    );
+  try {
+    await deleteAllRefreshTokens(refreshToken);
+    res
+      .clearCookie("accessToken")
+      .clearCookie("refreshToken")
+      .status(200)
+      .json({
+        message: `Пользователь успешно вышел из системы. До встречи!`,
+      });
+  } catch (ignoted) {
+    next(new Error("❗️ Возникла проблема при попытке выйти из системы ❗️"));
   }
-
-  const savedRefreshToken = await findRefreshToken(refreshToken);
-
-  if (
-    !savedRefreshToken ||
-    savedRefreshToken.revoked === true ||
-    Date.now() >= savedRefreshToken.expire_at.getTime()
-  ) {
-    return next(new AuthError(401, "Unauthorized -- token"));
-  }
-
-  const user = await findUserById(savedRefreshToken.userId);
-  if (!user) {
-    return next(new AuthError(401, "Unauthorized-user"));
-  }
-
-  await makeTokenInvalid(savedRefreshToken.id);
-  const { accessToken, refreshToken: newRefreshToken } = generateTokens(user);
-
-  await addRefreshToketToWhiteList({
-    refreshToken: newRefreshToken,
-    userId: user.id,
-  });
-
-  res
-    .cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    })
-    .cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    })
-
-    .redirect(`/${address}`)
-});
+};
