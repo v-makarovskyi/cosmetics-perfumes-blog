@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import logo from "@images/logos/logo-2.png";
-import appleStore from "@images/appstore.png";
-import googlePlay from "@images/googleplay.png";
-import { Facebook } from "../../svg/facebook";
-import { Instagram } from "../../svg/instagram";
-import { In } from "../../svg/in";
-import { Twitter } from "../../svg/twitter";
-import { Vimeo } from "../../svg/vimeo";
+import logo from "@media/images/logos/logo-2.png";
+import appleStore from "@media/images/appstore.png";
+import googlePlay from "@media/images/googleplay.png";
+import { Facebook } from "@svg/facebook";
+import { Instagram } from "@svg/instagram";
+import { In } from "@svg/in";
+import { Twitter } from "@svg/twitter";
+import { Vimeo } from "@svg/vimeo";
 
 export const Footer: FC = (): JSX.Element => {
   return (

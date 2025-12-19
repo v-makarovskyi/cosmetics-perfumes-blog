@@ -10,7 +10,7 @@ export type RefreshToken = {
 
 export type Tag = {
   id: string;
-  title: string;
+  name: string;
   blog?: Blog[];
 };
 
@@ -24,19 +24,33 @@ export type Category = {
   created_at: string;
 };
 
+export type Author = {
+  id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  image_url: string;
+  profession: string;
+  blogs: Blog[];
+}
+
 export type Blog = {
   id: string;
   categoryId: string;
-  title: string;
+  category?: Category;
+  category_slug?: string;
+  title: string; 
   slug: string;
   main_image: string;
   description: string;
   tags?: Tag[];
-  wishlist: Wishlist[];
+  wishlist?: Wishlist[];
   authorId: string;
+  author?: Author;
   read_time: string;
   created_at: string;
   updated_at: string;
+  created_at_for_client: string;
 };
 
 export interface Wishlist {
@@ -69,14 +83,7 @@ export interface User {
     created_at: string;
     updated_at: string;
     profileName?: string;
-    user_image?: string | undefined;
+    user_image?: string | Blob | FileList | File;
   };
 }
 
-export interface AuthUser {
-  id: string;
-  name: string;
-  email: string;
-  is_admin: boolean;
-  user_image?: string | undefined;
-}

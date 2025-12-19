@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import table from "text-table";
 
 import type {
   AppStatsCompilations,
@@ -7,7 +6,7 @@ import type {
 } from "../../types/webpack.types";
 
 function formatMsg(
-  message: AppStatsErrorOrWarning | AppStatsCompilations[] | string
+  message: AppStatsErrorOrWarning | AppStatsErrorOrWarning[] | string
 ) {
   let lines: string[] | string = [];
   if (typeof message === "string") {

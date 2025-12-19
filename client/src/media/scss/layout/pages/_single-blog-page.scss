@@ -17,11 +17,18 @@
 
   &__category {
     margin-bottom: 6px;
+    display: block;
 
     & span {
       font-size: 20px;
       color: u.$primary;
       display: inline-block;
+    }
+
+    &--admin-actions {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
     }
   }
 
@@ -36,6 +43,35 @@
       line-height: 1.2;
     }
   }
+
+  //admin actions
+  &__admin-actions {
+    display: inline-flex;
+    margin-left: 15px;
+    column-gap: 10px;
+    color: u.$white;
+  }
+  &__admin-action-delete,
+  &__admin-action-change {
+    min-width: 118px;
+    border: none;
+    padding-inline: 12px;
+    padding-block: 5px;
+    border-radius: 5px;
+
+    @include u.mix-hover {
+      box-shadow: 1px 0px 2px grey, -1px 0px 2px u.$primary;
+    }
+  }
+
+  &__admin-action-delete {
+    background-color: u.$red;
+  }
+
+  &__admin-action-change {
+    background-color: u.$green;
+  }
+  /*  *************************************** */
 
   &__meta {
     margin-bottom: 50px;
@@ -213,13 +249,13 @@
     }
 
     &::after {
-        content: '';
-        position: absolute;
-        top: 30px;
-        left: 50%;
-        height: 90px;
-        width: 1px;
-        background-color: rgba($color: u.$black, $alpha: 0.1);
+      content: "";
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      height: 90px;
+      width: 1px;
+      background-color: rgba($color: u.$black, $alpha: 0.1);
     }
 
     & > :first-child {
@@ -240,22 +276,22 @@
     }
 
     &-icon {
-        & svg {
-            color: u.$black;
-        }
+      & svg {
+        color: u.$black;
+      }
     }
 
     &-content {
-        & span {
-            display: inline-block;
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
+      & span {
+        display: inline-block;
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
     }
 
     &-title {
-        font-weight: 500;
-        line-height: 1.2;
+      font-weight: 500;
+      line-height: 1.2;
     }
   }
 }

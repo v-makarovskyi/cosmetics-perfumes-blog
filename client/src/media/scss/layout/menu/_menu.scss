@@ -25,6 +25,8 @@
     }
   }
 
+  
+
   :where(&__has-dropdown) &__title {
     &::after {
       content: "\25BC";

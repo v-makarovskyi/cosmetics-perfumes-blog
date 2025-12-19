@@ -10,7 +10,7 @@ import prompts from "prompts";
 import chalk from "chalk";
 
 //import types
-import type { PromptsObjectType } from "../webpack.types";
+import type { PromptsObjectType } from "../../types/webpack.types";
 import { appPaths } from "../config/paths";
 
 const defaultBrowsers: { [x: string]: readonly string[] } = {

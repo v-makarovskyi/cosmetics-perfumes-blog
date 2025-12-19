@@ -1,3 +1,7 @@
+process.on("unhandledRejection", (err) => {
+  throw err;
+});
+
 import { existsSync } from "fs";
 
 import Webpack from "webpack";
@@ -7,6 +11,7 @@ import chalk from "chalk";
 import { appPaths } from "../config/paths";
 import { createWebpackDevServerConfig } from "../config/webpackDevServerConfig";
 import { checkBrowsers } from "../utils/browsersHelpers";
+import { checkRequiredFiles } from "../utils/checkRequiredFiles";
 import {
   createCompiler,
   prepareUrls,
@@ -14,8 +19,26 @@ import {
 } from "../utils/webpackDevServerUtils";
 import { config as configFactory } from "../config/webpack.config";
 
+if (
+  !checkRequiredFiles([appPaths.appHtml as string, appPaths.appIndex as string])
+) {
+  process.exit(1);
+}
+
+if (process.env.HOST) {
+  console.log(
+    `\nПроизошла попытка привязки к переменной среды HOST: ${chalk.bold.yellow(
+      process.env.HOST
+    )}`
+  );
+  console.log(
+    `Если это произошло непреднамеренно, проверьте, не установили ли вы его по ошибке в своей оболочке.`
+  );
+  console.log();
+}
+
 const isInteractive: boolean = process.stdout.isTTY;
-const DEFAULT_PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 9000;
+const DEFAULT_PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 8080;
 const HOST = process.env.HOST || "0.0.0.0";
 
 checkBrowsers(appPaths.appPath as string, isInteractive)

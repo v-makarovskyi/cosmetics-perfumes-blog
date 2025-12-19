@@ -1,9 +1,16 @@
+import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 export function isFetchBaseQueryError(
   error: unknown
-): error is FetchBaseQueryError {
-  return typeof error === "object" && error !== null && "status" in error;
+): error is SerializedError {
+  return typeof error === "object" && error !== null && "name" in error;
+}
+
+type ErrorMessage = {
+    location?: string;
+    message?: string;
+    fieldName?: string
 }
 
 export function isErrorWithCustomDataServer(error: unknown): error is {
@@ -14,7 +21,7 @@ export function isErrorWithCustomDataServer(error: unknown): error is {
     stack: string;
     success: boolean;
     errorMessage: string;
-    errorMessagesArray: string[];
+    errorMessagesArray: ErrorMessage[];
   };
 } {
   return (

@@ -1,23 +1,27 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, Dispatch, SetStateAction } from "react";
+import { Link } from "react-router";
 import { BlogItem } from "@src/components/blog-grid/blog-item";
 import { menu_data } from "@src/data/menu-data";
-import { blog_data } from "@src/data/blog-data";
+import { useSelector } from "react-redux";
+import type { RootState } from "@src/redux/store";
+import type { Blog } from "@client_types/clientTypes";
 
-export type Blog = {
-  id: number;
-  image: string;
-  date: string;
-  author: string;
-  title: string;
-  tags: string[];
-  category: string;
-  comments: number;
-  description_sm: string;
-  blog: string;
+type MenusProps = {
+  onHandleAddBlogToWishlist: (
+    slug: Blog["slug"]
+  ) => Promise<void>;
+  onHandleDeleteBlogFromWishlist: (
+    slug: Blog["slug"]
+  ) => Promise<void>;
 };
 
-export const Menus: FC = (): JSX.Element => {
-  const blogs: Blog[] = blog_data.filter((b) => b.blog === "cosmetics");
+export const Menus: FC<MenusProps> = ({
+  onHandleAddBlogToWishlist,
+  onHandleDeleteBlogFromWishlist,
+}): JSX.Element => {
+  const { blogsDataForHeader } = useSelector(
+    (state: RootState) => state.blogsDataForParts
+  );
 
   return (
     <ul className="menus__list">
@@ -27,14 +31,21 @@ export const Menus: FC = (): JSX.Element => {
             key={menu.id}
             className="menus__item menus__home menus__has-dropdown menus__has-bigmenu"
           >
-            <a className="menus__title" href={menu.link}>
+            <Link className="menus__title" to={menu.link}>
               {menu.title}
-            </a>
+            </Link>
             <div className="menus__submenu menus__bigmenu">
               <div className="row">
-                {blogs.slice(0, 3).map((blog) => (
+                {blogsDataForHeader?.map((blog) => (
                   <div key={blog.id} className="col-xl-4">
-                    <BlogItem blog={blog} blogMenusItem />
+                    <BlogItem
+                      blog={blog}
+                      onHandleAddBlogToWishlist={onHandleAddBlogToWishlist}
+                      onHandleDeleteBlogFromWishlist={
+                        onHandleDeleteBlogFromWishlist
+                      }
+                      blogMenusItem
+                    />
                   </div>
                 ))}
               </div>
@@ -42,22 +53,24 @@ export const Menus: FC = (): JSX.Element => {
           </li>
         ) : menu.sub_menu ? (
           <li key={menu.id} className="menus__item menus__has-dropdown">
-            <a className="menus__title" href={menu.link}>
+            <Link className="menus__title" to={`categories/${menu.link}`}>
               {menu.title}
-            </a>
+            </Link>
             <ul className="menus__submenu">
-              {menu.sub_menus.map((submenu, idx) => (
+              {menu.sub_menus?.map((submenu, idx: number) => (
                 <li key={idx}>
-                  <a href={submenu.link}>{submenu.title}</a>
+                  <Link to={`categories/${menu.link}/${submenu.link}`}>
+                    {submenu.title}
+                  </Link>
                 </li>
               ))}
             </ul>
           </li>
         ) : (
           <li className="menus__item" key={menu.id}>
-            <a className="menus__title" href={menu.link}>
+            <Link className="menus__title" to={`categories/${menu.link}`}>
               {menu.title}
-            </a>
+            </Link>
           </li>
         )
       )}

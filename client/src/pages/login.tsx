@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { CommonBreadcrumb } from "../components/breadcrumb/common-breadcrumb";
-import { LoginArea } from "../components/login-register/login-area";
+import { CommonBreadcrumb } from "@components/breadcrumb/common-breadcrumb";
+import { LoginArea } from "@components/login-register/login-area";
 
 
 export const LoginPage: FC = (): JSX.Element => {

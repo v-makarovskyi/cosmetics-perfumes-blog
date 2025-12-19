@@ -1,12 +1,27 @@
-import React from "react";
-import { CommonBreadcrumb } from "@src/components/breadcrumb/common-breadcrumb";
-import { BlogGridArea } from "@src/components/blog-grid/blog-grid-area";
-import { SectionTitile } from "@src/components/blog-grid/section-title";
-import home_bg from "@images/breadcrumb-bg-home.png";
+import React, { FC, useState } from "react";
+import { useGetAllPostsQuery } from "@src/redux/features/blog/blogApi";
+import { CommonBreadcrumb } from "@components/breadcrumb/common-breadcrumb";
+import { BlogGridArea } from "@components/blog-grid/blog-grid-area";
+import { SectionTitile } from "@components/blog-grid/section-title";
+import home_bg from "@media/images/breadcrumb-bg-home.png";
+import { BlogGridAreaSkeleton } from "@src/components/skeletons";
+import { useOutletContextData } from "@src/layout/root-layout";
 
-export function Home() {
+const Home: FC = (): JSX.Element => {
+  const {
+    blogsDataPosition: { startPosition, stopPosition },
+    setBlogsDataPosition,
+    handleAddBlogToWishlist,
+    handleDeleteBlogFromWishlist,
+  } = useOutletContextData();
+
+  const { data, isLoading } = useGetAllPostsQuery({
+    startPosition,
+    stopPosition,
+  });
+
   return (
-    <>
+    <section className="homePage">
       <CommonBreadcrumb
         home={true}
         title="Ulta"
@@ -15,7 +30,16 @@ export function Home() {
         center={false}
       />
       <SectionTitile />
-      <BlogGridArea />
-    </>
+
+      <BlogGridArea
+        blogsDataForPagination={data?.blogsDataForPagination}
+        blogsLength={data?.allBlogsLength}
+        setBlogsDataPosition={setBlogsDataPosition}
+        onHandleAddBlogToWishlist={handleAddBlogToWishlist}
+        onHandleDeleteBlogFromWishlist={handleDeleteBlogFromWishlist}
+      />
+    </section>
   );
-}
+};
+
+export { Home };

@@ -14,6 +14,16 @@
   }
 
   &__item {
+    &--active span {
+      background-color: u.$primary;
+      color: u.$white;
+    }
+
+    &--disabled span {
+      background-color: lightgray;
+      cursor: not-allowed;
+    }
+
     & span {
       @include u.mix-square(40px);
       padding: 8px 15px;
@@ -31,7 +41,7 @@
     @include u.mix-hover {
       cursor: pointer;
 
-      & span {
+      & span:not(.pagination__item--disabled > span) {
         background-color: u.$primary;
         color: u.$white;
         @include u.mix-transition;

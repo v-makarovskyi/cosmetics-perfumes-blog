@@ -1,23 +1,27 @@
 import path, { resolve } from "path";
 import fs from "fs";
+import url from "node:url";
+import http from "http";
 
 import chalk from "chalk";
 import { detect } from "detect-port";
 import forkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import isRoot from "is-root";
 import prompts from "prompts";
-import url from "node:url";
 
 import { appPaths } from "../config/paths";
 import { formatWebpackMessages } from "./formatWebpackMessages";
 import { getProcessForPort } from "./getProcessForPort";
 import { getIp } from "./getIp";
+import { clearConsole } from "./clearConsole";
 
 import type {
   CreateCompilerFuncPropsType,
   AppCompiller,
   PromptsObjectType,
 } from "../../types/webpack.types";
+
+import { IncomingMessage } from "webpack-dev-server";
 
 const isInteractive: boolean = process.stdout.isTTY;
 
@@ -179,7 +183,7 @@ function createCompiler({
 
   compiller.hooks.invalid.tap("invalid", () => {
     if (isInteractive) {
-      //clearConsole()
+      clearConsole()
       console.log(chalk.blackBright.bold("⏳ Компиляция... ⏳"));
     }
   });
@@ -221,7 +225,7 @@ function createCompiler({
 
   compiller.hooks.done.tap("done", async (stats) => {
     if (isInteractive) {
-      //cleatConsole()
+      clearConsole()
     }
 
     const statsData = stats.toJson({
@@ -267,5 +271,7 @@ function createCompiler({
 
   return compiller;
 }
+
+
 
 export { createCompiler, prepareUrls, choosePort };

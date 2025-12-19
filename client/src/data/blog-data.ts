@@ -1,6 +1,6 @@
-import blog_1_image from '@images/blog/blog-sm-1.jpg'
-import blog_2_image from '@images/blog/blog-sm-2.jpg'
-import blog_3_image from '@images/blog/blog-sm-3.jpg'
+import blog_1_image from '@media/images/blog/blog-sm-1.jpg'
+import blog_2_image from '@media/images/blog/blog-sm-2.jpg'
+import blog_3_image from '@media/images/blog/blog-sm-3.jpg'
 
 export interface BlogData {
   id: number,
@@ -22,7 +22,7 @@ export const blog_data: BlogData[] = [
     date: "14.01.2025",
     author: "Иванна Петрова",
     title:
-      "Покрокова інструкція. Новорічний макіяж, натхнений роком Змії, у сліпучо-зелених тонах",
+       "Покрокова інструкція. Новорічний макіяж, натхнений роком Змії, у сліпучо-зелених тонах",
     tags: ["Помада", "Макияж"],
     category: "guides",
     comments: 2,

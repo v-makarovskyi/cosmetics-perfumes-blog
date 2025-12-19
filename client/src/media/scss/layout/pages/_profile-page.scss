@@ -194,6 +194,7 @@
         font-size: 16px;
         cursor: pointer;
         border: none;
+        margin-left: auto;
 
         @include u.mix-hover {
           background-color: u.$primary;

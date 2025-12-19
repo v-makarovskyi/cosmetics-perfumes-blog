@@ -1,10 +1,11 @@
 import { appPaths } from "./paths";
 import { type Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
 
-
-function createWebpackDevServerConfig(allowedHost: string): WebpackDevServerConfiguration {
+function createWebpackDevServerConfig(
+  allowedHost: string
+): WebpackDevServerConfiguration {
   return {
-    allowedHosts: [allowedHost],
+    allowedHosts: allowedHost ? [allowedHost] : "all",
     compress: true,
     headers: {
       "Access-Control-Allow-Origin": "*",
@@ -17,11 +18,9 @@ function createWebpackDevServerConfig(allowedHost: string): WebpackDevServerConf
     },
     client: {
       overlay: false,
+      progress: true,
     },
     historyApiFallback: true,
-    devMiddleware: {
-        publicPath: appPaths.publicUrlOrPath.slice(0, -1) as string
-    }
   };
 }
 

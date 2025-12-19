@@ -1,7 +1,8 @@
 import React, { FC } from "react";
-import shape_1 from "/public/images/login-shapes/but-1.png";
-import shape_2 from "/public/images/login-shapes/but-2.png";
-import shape_3 from "/public/images/login-shapes/but-3.png";
+
+import shape_1 from "@media/images/login-shapes/but-1.png";
+import shape_2 from "@media/images/login-shapes/but-2.png";
+import shape_3 from "@media/images/login-shapes/but-3.png";
 
 export const LoginShapes: FC = (): JSX.Element => {
   return (
