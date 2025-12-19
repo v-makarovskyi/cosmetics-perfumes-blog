@@ -7,7 +7,7 @@
   },
   "scripts": {
     "devstart": "nodemon www.js",
-    "debug": "DEBUG=cosmetics-blog:* nodemon www.js",
+    "debug": "DEBUG=cosmetics-perfumes-blog:* nodemon www.js",
     "build": "cd ./client && npm install && npm run build",
     "start": "node www.js"
   },
@@ -19,6 +19,8 @@
     "@neondatabase/serverless": "^1.0.0",
     "@prisma/client": "^6.4.1",
     "bcrypt": "^5.1.1",
+    "chalk": "^5.6.2",
+    "cloudinary": "^2.8.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "debug": "^4.4.0",

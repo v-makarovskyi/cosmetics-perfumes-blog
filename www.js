@@ -1,6 +1,6 @@
-var http = require("node:http");
-var app = require("./app");
-var debug = require("debug")("cosmetics-blog:server");
+const http = require("node:http");
+const app = require("./app");
+const debug = require("debug")("cosmetics-perfumes-blog:server");
 
 var port = normalizePort(process.env.PORT || "9000");
 app.set("port", port);
