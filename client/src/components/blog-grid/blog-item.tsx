@@ -1,15 +1,23 @@
-import React, { FC } from "react";
-import { Blog } from "@src/layout/header/header-parts/menus";
+import React, { FC, useState, Dispatch, SetStateAction } from "react";
+import { Link } from "react-router";
+import type { Blog } from "@client_types/clientTypes";
 import { Tags } from "@svg/tags";
 import { Date } from "@svg/date";
+import { Delete } from "@src/svg/delete";
 import { Comment } from "@svg/comment";
 import { ArrowRightLong } from "@svg/arrow-right-long";
+import { RootState, AppDispatch } from "@src/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { Wishlist } from "@src/svg/wishlist";
+import { ChangeBlog } from "@src/svg/change";
 
 type BlogItemProps = {
   blog: Blog;
   blogGridItem?: boolean;
   blogMenusItem?: boolean;
   blogListItem?: boolean;
+  onHandleAddBlogToWishlist: (slug: Blog["slug"]) => Promise<void>;
+  onHandleDeleteBlogFromWishlist: (slug: Blog["slug"]) => Promise<void>;
 };
 
 export const BlogItem: FC<BlogItemProps> = ({
@@ -17,8 +25,25 @@ export const BlogItem: FC<BlogItemProps> = ({
   blogMenusItem = false,
   blogGridItem = false,
   blogListItem = false,
+  onHandleAddBlogToWishlist,
+  onHandleDeleteBlogFromWishlist,
 }): JSX.Element => {
-  const { id, title, image, date, description_sm, comments, tags } = blog || {};
+  const user = useSelector((state: RootState) => state.auth.existUser);
+
+  const {
+    title,
+    slug: blogSlug,
+    main_image,
+    created_at_for_client,
+    description,
+    category,
+    /* comments, */
+    tags,
+  } = blog || {};
+
+  const isBlogInWishlist = user?.wishlist?.wishlist_blogs.find(
+    (blog) => blog.slug === blogSlug
+  );
 
   return (
     <div
@@ -33,16 +58,39 @@ export const BlogItem: FC<BlogItemProps> = ({
       }`}
     >
       <div className="blog-item__top">
-        <a className="blog-item__link" href="/">
+        <button
+          className="button blog-item__wishlist"
+          onClick={
+            isBlogInWishlist
+              ? () => onHandleDeleteBlogFromWishlist(blogSlug)
+              : () => onHandleAddBlogToWishlist(blogSlug)
+          }
+        >
+          <Wishlist
+            width="40"
+            height="50"
+            fill={!isBlogInWishlist ? "yellow" : "#16284a"}
+          />
+        </button>
+          <button className="blog-item__delete">
+            <Delete width="40" height="50" fill='red'/>
+          </button>
+
+        <Link
+          className="blog-item__link"
+          to={`/blogs/${
+            category?.slug || blog.category_slug
+          }/blog-detail/${blogSlug}`}
+        >
           <img
             className="blog-item__image"
-            src={image}
+            src={main_image}
             alt=""
             width="700"
             height="390"
             loading="lazy"
           />
-        </a>
+        </Link>
 
         {blogGridItem || blogMenusItem ? (
           <div className="blog-item__body">
@@ -50,68 +98,89 @@ export const BlogItem: FC<BlogItemProps> = ({
               <span>
                 <Date />
               </span>
-              {date}
+              {created_at_for_client}
             </div>
 
-            {blogGridItem ? (
+            {/*  {blogGridItem ? (
               <div className="blog-item__comments">
                 <span>
                   <Comment />
                 </span>
                 Comments: {comments}
               </div>
-            ) : null}
+            ) : null} */}
 
-            {blogMenusItem ? (
-              <div className="blog-item__tags">
-                <span>
-                  <Tags />
-                </span>
-                {tags.map((tag, idx) => (
-                  <a key={idx} href="/">
-                    {tag}
-                    {/*  {idx < tags.length - 1 && ","} */}
-                  </a>
-                ))}
-              </div>
-            ) : null}
+            <div className="blog-item__tags">
+              <span>
+                <Tags />
+              </span>
+              {tags?.map(({ id, name }, idx: number) => (
+                <a key={id} href="/">
+                  <span>{name}</span>
+                  {/*   {idx < tags.length - 1 && ","} */}
+                </a>
+              ))}
+            </div>
           </div>
         ) : null}
       </div>
-      {blogMenusItem ? (
-        <h2 className="blog-item__title">{title}</h2>
-      ) : null}
+      {blogMenusItem && (
+        <Link
+          to={`/blogs/${
+            category?.slug || blog.category_slug
+          }/blog-detail/${blogSlug}`}
+        >
+          <h2 className="blog-item__title">{title}</h2>
+        </Link>
+      )}
 
       {blogGridItem || blogListItem ? (
         <div className="blog-item__content">
-          {blogListItem ? (
+          {blogListItem && (
             <div className="blog-item__body">
               <div className="blog-item__date">
                 <span>
                   <Date />
                 </span>
-                {date}
+                {created_at_for_client}
               </div>
 
-              {blogGridItem || blogListItem ? (
+              {/*  {blogGridItem || blogListItem ? (
                 <div className="blog-item__comments">
                   <span>
                     <Comment />
                   </span>
                   Comments: {comments}
                 </div>
-              ) : null}
+              ) : null} */}
             </div>
-          ) : null}
-          <h2 className="blog-item__title">{blogListItem ? title : title.slice(0,41)+`...`}</h2>
+          )}
+          <Link
+            to={`/blogs/${
+              category?.slug || blog.category_slug
+            }/blog-detail/${blogSlug}`}
+          >
+            <h2 className="blog-item__title">
+              {blogListItem ? title : title.slice(0, 41) + `...`}
+            </h2>
+          </Link>
+
           <p className="blog-item__description">
-            {blogListItem ? description_sm.slice(0, 121) : description_sm.slice(0,71)+`...`}
+            {blogListItem
+              ? description.slice(0, 121)
+              : description.slice(0, 71) + `...`}
           </p>
           <button className="blog-item__btn button">
-            Read more
-            <span>
-              <ArrowRightLong />
-            </span>
+            <Link
+              to={`/blogs/${
+                category?.slug || blog.category_slug
+              }/blog-detail/${blogSlug}`}
+            >
+              Read more
+              <span>
+                <ArrowRightLong />
+              </span>
+            </Link>
           </button>
         </div>
       ) : null}

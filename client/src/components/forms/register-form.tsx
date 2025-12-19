@@ -23,18 +23,18 @@ type Inputs = {
 
 const schema = YUP.object().shape({
   name: YUP.string()
-    .matches(/^([a-zA-Z'-]{0,50}|[а-яА-ЯёЁ'-]{0,21})$/, {
+    .matches(/^([a-zA-Z'-]{0,21}|[а-яА-ЯёЁ'-]{0,21})$/, {
       excludeEmptyString: false,
-      message: `Допустимы символы [a-z, A-z], [а-я, А-Я], [',-]. Не менее2-х и не более 21 символов`,
+      message: `Допустимы символы [a-z, A-z], [а-я, А-Я], [',-]. Не менее 3-х и не более 21 символов`,
     })
     .required("Name - обязательное поле. Повторите попытку.")
-    .min(3, "поле NAME - не менее 2-х символов")
+    .min(3, "поле NAME - не менее 3-х символов")
     .max(21, "поле NAME - не более 21 символов"),
   email: YUP.string()
     .email("Вы должны предоставить действительный email")
     .required("Email - обязательное поле. Повторите попытку."),
   password: YUP.string()
-    .min(2, "Пароль должен содержать не менее 6 символов")
+    .min(6, "Пароль должен содержать не менее 6 символов")
     .required(),
   remember: YUP.boolean()
     .required()
@@ -71,36 +71,38 @@ export const RegisterForm: FC = (): JSX.Element => {
       });
       if (res.error) {
         if (isErrorWithCustomDataServer(res.error)) {
-          notifyError(res.error.data.errorMessage ?? "any error");
+          notifyError(res.error.data.errorMessage);
           if (res.error.data.errorName === "ServerFieldValidationError") {
             throw new ServerFieldValidationError({
               statusCode: res.error.data.statusCode,
             });
-          } else if (res.error.data.errorName === "ApiError") {
+          } else if (res.error.data.errorName === "AuthError") {
             throw new AuthError(
-              `${res.error.data.statusCode}`,
-              `${res.error.data.errorMessage}`
+              res.error.data.statusCode,
+              res.error.data.errorMessage
             );
           } else {
             throw new Error(`${res.error.data.errorMessage}`);
           }
         }
       } else {
-        notifySuccess(res.data.message ?? "default message");
+        notifySuccess(res.data.message);
+        navigate('/login')
       }
+      reset()
     } catch (error: any) {
       if (error instanceof ServerFieldValidationError) {
         console.error(
-          `%c${error.name}(${error.statusCode}): ${error.message}.\n%c${error.stack}`,
+          `%c${error.name}(${error.statusCode}): ${error.message}.\n%c${error.stack}.`,
           "color: red; background-color: white; padding: 2px;",
           "color: black; background-color: yellow"
         );
       } else if (error instanceof AuthError) {
-        console.error(
-          `%c${error.name}(${error.statusCode}) - ${error.message}.\n%c${error.stack}`,
+       console.error(
+          `%c${error.name}(${error.statusCode}) - ${error.message}.\n%c${error.stack}.`,
           "color: teal; background-color: yellow; padding: 2px;",
           "color: green; background-color: white"
-        );
+        ); 
       } else {
         console.error(
           `%c${error.name} - ${error.message}.\n%c${error.stack}`,

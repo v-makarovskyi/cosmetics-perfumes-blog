@@ -1,26 +1,37 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect, Dispatch, SetStateAction } from "react";
 import { BlogSidebar } from "./blog-sidebar";
 import { ListTab } from "@src/svg/list-tab";
 import { GridTab } from "@src/svg/grid-tab";
-import { blog_data } from "@src/data/blog-data";
-import { BlogData } from "@src/data/blog-data";
 import { BlogItem } from "./blog-item";
 import { Pagination } from "../pagination";
+import type { Blog } from "@client_types/clientTypes";
 
 type BlogGridAreaProps = {
   list_area?: boolean;
+  blogsDataForPagination?: Blog[];
+  blogsLength?: number;
+  blogsDataPosition?: { startPosition: number; stopPosition: number };
+  setBlogsDataPosition?: (arg0: {
+    startPosition: number;
+    stopPosition: number;
+  }) => void;
+  onHandleAddBlogToWishlist: (
+    slug: Blog["slug"]
+  ) => Promise<void>;
+  onHandleDeleteBlogFromWishlist: (
+    slug: Blog["slug"]
+  ) => Promise<void>;
 };
 
 export const BlogGridArea: FC<BlogGridAreaProps> = ({
   list_area = false,
+  blogsDataForPagination = [],
+  blogsLength = 0,
+  blogsDataPosition,
+  setBlogsDataPosition,
+  onHandleAddBlogToWishlist,
+  onHandleDeleteBlogFromWishlist,
 }): JSX.Element => {
-  const filteredData: BlogData[] = blog_data.filter(
-    (blog) => blog.blog === "cosmetics"
-  );
-
-  const [pageStar, setPageStart] = useState<number>(0);
-  const [countOgPage, setCountOfPage] = useState<number>(3);
-
   return (
     <section className="blog-grid-area">
       <div className="container">
@@ -29,7 +40,17 @@ export const BlogGridArea: FC<BlogGridAreaProps> = ({
             <div className="blog-grid-area__wrapper">
               <div className="blog-grid-area__top d-flex justify-content-between">
                 <div className="blog-grid-area__top-result">
-                  <p>Предоставлено 1-6 из 21 результатов</p>
+                  <p>
+                    Предоставлено{" "}
+                    {blogsDataPosition?.startPosition === 0
+                      ? "1"
+                      : blogsDataPosition?.startPosition}{" "}
+                    -{" "}
+                    {blogsDataPosition?.stopPosition! <= blogsLength
+                      ? blogsDataPosition?.stopPosition
+                      : blogsLength}{" "}
+                    из {blogsLength} результатов
+                  </p>
                 </div>
                 <div className="blog-grid-area__top-tab tab">
                   <nav>
@@ -73,10 +94,19 @@ export const BlogGridArea: FC<BlogGridAreaProps> = ({
                 >
                   <div className="blog-grid-area__grid-item-wrapper">
                     <div className="row" style={{ rowGap: 20 }}>
-                      {filteredData.map((blog) => {
+                      {blogsDataForPagination.map((blog) => {
                         return (
                           <div key={blog.id} className="col-md-6 col-lg-6">
-                            <BlogItem blog={blog} blogGridItem />
+                            <BlogItem
+                              blog={blog}
+                              onHandleAddBlogToWishlist={
+                                onHandleAddBlogToWishlist
+                              }
+                              onHandleDeleteBlogFromWishlist={
+                                onHandleDeleteBlogFromWishlist
+                              }
+                              blogGridItem
+                            />
                           </div>
                         );
                       })}
@@ -92,16 +122,28 @@ export const BlogGridArea: FC<BlogGridAreaProps> = ({
                   tabIndex={0}
                 >
                   <div className="blog-grid-area__list-item-wrapper">
-                    {filteredData.map((blog) => {
+                    {blogsDataForPagination.map((blog) => {
                       return (
-                        <BlogItem key={blog.id} blog={blog} blogListItem />
+                        <BlogItem
+                          key={blog.id}
+                          blog={blog}
+                          onHandleAddBlogToWishlist={onHandleAddBlogToWishlist}
+                          onHandleDeleteBlogFromWishlist={
+                            onHandleDeleteBlogFromWishlist
+                          }
+                          blogListItem
+                        />
                       );
                     })}
                   </div>
                 </div>
               </div>
             </div>
-            <Pagination />
+            <Pagination
+              blogsLength={blogsLength}
+              blogsPosition={blogsDataPosition}
+              onSetBlogsPosition={setBlogsDataPosition}
+            />
           </div>
 
           <div className="col-lg-4 col-xl-3">

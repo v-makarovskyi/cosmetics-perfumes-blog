@@ -7,14 +7,14 @@ const categoriesData = [
     qty: 10,
   },
   { id: "2", title: "Советы", qty: 3 },
-  { id: "3", title: "Trends", qty: 7 },
+  { id: "3", title: "Trendy", qty: 7 },
   {
     id: "4",
     title: "get the look",
     qty: 10,
   },
   { id: "5", title: "Советы", qty: 3 },
-  { id: "6", title: "Trends", qty: 7 },
+  { id: "6", title: "Trendy", qty: 7 },
 ];
 
 export const BlogSidebarCats: FC = (): JSX.Element => {

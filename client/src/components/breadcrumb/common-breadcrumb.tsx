@@ -1,12 +1,14 @@
 import { FC } from "react";
+import { Link } from "react-router";
 
 type CommonBreadcrumbProps = {
-  title: string;
-  subtitle: string;
+  title?: string;
+  subtitle?: string;
   bg_clr?: boolean;
   center: boolean;
   img?: string;
   home?: boolean;
+  searchResultsPage?: boolean
 };
 
 export const CommonBreadcrumb: FC<CommonBreadcrumbProps> = ({
@@ -15,6 +17,7 @@ export const CommonBreadcrumb: FC<CommonBreadcrumbProps> = ({
   center = false,
   bg_clr = false,
   home = false,
+  searchResultsPage = false, 
   img = "",
 }): JSX.Element => {
   return (
@@ -46,7 +49,7 @@ export const CommonBreadcrumb: FC<CommonBreadcrumbProps> = ({
                 <ul className="breadcrumb__list">
                   <li className="breadcrumb__item">
                     <span>
-                      <a href="/">Домой</a>
+                      <Link to="/">Домой</Link>
                     </span>
                   </li>
                   <li className="breadcrumb__item">
