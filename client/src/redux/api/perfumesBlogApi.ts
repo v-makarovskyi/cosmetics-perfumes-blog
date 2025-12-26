@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const PUBLIC_API_BASE_URL = 'https://cosmetics-perfumes-blog.vercel.app'
+const PUBLIC_API_BASE_URL = 'https://cosmetics-perfumes-blog.vercel.app/api/'
 
 
 export const perfumesBlogApi = createApi({
