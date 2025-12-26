@@ -53,6 +53,10 @@ app.use(
 
 //let test = path.resolve(publicFolder, pathname.replace(new RegExp('^' + servedPath), ''))
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+}); 
+
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/blogs", blogRouter);
@@ -62,10 +66,7 @@ app.use('/api/tags', tagRouter);
 app.use("/api/upload", uploadRouter);
 //app.use('/api/cloudinary', cloudinaryRouter)
 
-/* app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-}); 
- */
+
 
 app.use(globalErrorHandler);
 
