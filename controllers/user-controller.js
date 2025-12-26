@@ -1,8 +1,3 @@
-process.on("unhandledRejection", (err) => {
-  console.log("НЕОБРАБОТАННАЯ АСИНХРОННАЯ ОШИБКА user-controller", err);
-  throw err;
-});
-
 const asyncHandler = require("express-async-handler");
 const db = require("../prisma/db.client");
 const { getCookieDecrypter } = require("../middleware/encrypt-cookie");

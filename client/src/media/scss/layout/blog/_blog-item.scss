@@ -46,6 +46,10 @@
 
   &__link {
     margin-bottom: 15px;
+   /*  & > img {
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    } */
   }
 
   &__tags {

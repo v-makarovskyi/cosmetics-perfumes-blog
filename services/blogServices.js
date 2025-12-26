@@ -66,6 +66,7 @@ exports.getSingleBlogServices = async (cs, bs) => {
       include: {
         category: {
           select: {
+            id: true,
             name: true,
             category_image: true,
             slug: true,
@@ -85,25 +86,9 @@ exports.getSingleBlogServices = async (cs, bs) => {
       },
     });
     return singleBlog;
-  } else {
-    throw new Error(
-      `Судя по всему, не существует категории в которой должен находиться блог`
-    );
-  }
+  } 
 };
 
-exports.updateSingleBlogServices =  async (options) => {
-  const { slug } = options;
-  const {
-    title,
-    category,
-    author,
-    read_time,
-    description,
-    tags,
-    cloudinaryImageUrl,
-  } = options.formDataOptions;
-};
 
 exports.getSearchBlogsResultsServises = async (searchStr, start, stop) => {
   searchStr =

@@ -1,7 +1,7 @@
-process.on("unhandledRejection", (err) => {
+/* process.on("unhandledRejection", (err) => {
   console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaa", err);
   throw err;
-});
+}); */
 
 const jwt = require("jsonwebtoken");
 const AuthError = require("../errors/auth-error");

@@ -108,7 +108,7 @@ export const SingleBlogPage: FC = (): JSX.Element => {
       },
       category: {
         label: `${singleBlog && singleBlog?.category?.name}`,
-        value: `${singleBlog?.category?.slug}`,
+        value: `${singleBlog?.category?.id}`,
       },
       tags: singleBlog?.tags?.map((t) => ({ label: t.name, value: t.id })),
     });

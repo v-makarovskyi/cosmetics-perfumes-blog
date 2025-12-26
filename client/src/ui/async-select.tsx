@@ -26,7 +26,7 @@ const loadCategoryOptions = async (input: string, cb: Function) => {
   const categories = await store
     .dispatch(categoryApi.endpoints.getAllCategories.initiate())
     .unwrap();
-  return categories.map((cat) => ({ label: cat.name, value: cat.slug }));
+  return categories.map((cat) => ({ label: cat.name, value: cat.id }));
 };
 
 const loadAuthorOptions = async (input: string, cb: Function) => {

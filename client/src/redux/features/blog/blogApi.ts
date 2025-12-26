@@ -26,10 +26,11 @@ export const blogApi = perfumesBlogApi.injectEndpoints({
       providesTags: (result, error, args) => {
         let output: { type: "Blog"; id: string }[] = [];
         for (let key in result) {
-          if (Array.isArray(result[key])) {
+          if (result && Array.isArray(result[key])) {
+            console.log(123);
             output = [
               ...output,
-              ...result[key].map(({ id }) => ({ type: "Blog" as const, id })),
+              ...result[key].map(({ id }) => ({ type: "Blog" as const, id })), ...[{type: 'Blog' as const, id: 'LIST'}]
             ];
           }
         }
@@ -74,8 +75,10 @@ export const blogApi = perfumesBlogApi.injectEndpoints({
           body: data.formData,
         };
       },
-      invalidatesTags: (result, error, arg) =>
-        result ? [{ type: "Blog", id: arg.blogSlug }] : [{ type: "Blog" }],
+      invalidatesTags: (result, error, arg) => {
+        console.log(arg);
+        return [{type: 'Blog', id: arg.blogSlug}, {type: "Blog", id: 'LIST'}]
+      },
     }),
   }),
 });

@@ -7,7 +7,7 @@ export const tagApi = perfumesBlogApi.injectEndpoints({
     getAllTags: builder.query<Tag[], void>({
       query: () => `tags`,
       providesTags: (result, error, arg) =>
-        result ? result.map(({ id }) => ({ type: "Tag", id })) : ["Tag"],
+        result ? result.map(({ id }) => ({ type: "Tag", id })) : [{type: 'Tag', id: 'LIST'}],
     }),
   }),
 });

@@ -1,8 +1,8 @@
-process.on("unhandledRejection", (err) => {
+/* process.on("unhandledRejection", (err) => {
   console.log("НЕОБРАБОТАННАЯ АСИНХРОННАЯ ОШИБКА category-controller", err);
   throw err;
 });
-
+ */
 const categoryServises = require("../services/categoryServises");
 
 exports.getAllCategories = (req, res, next) => {

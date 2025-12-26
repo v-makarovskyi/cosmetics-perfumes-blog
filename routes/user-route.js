@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const userController = require("../controllers/user-controller");
 const verify = require("../middleware/verify-user");
-//const cloudinaryController = require('../controllers/cloudinary-controller')
 const cloudinaryMiddleware = require('../middleware/cloudinary-middleware')
 
 const multer = require('multer')

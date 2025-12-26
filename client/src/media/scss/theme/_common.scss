@@ -1,0 +1,21 @@
+@use '../utils/' as u;
+
+.body-overlay {
+    background-color: u.$black;
+    @include u.mix-square(100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 9999;
+    visibility: hidden;
+    @include u.mix-transition();
+    @include u.mix-hover {
+        cursor: url('../../images/cross-out.png'), pointer;
+    }
+}
+
+.body-overlay.opened {
+    opacity: .8;
+    visibility: visible;
+}
