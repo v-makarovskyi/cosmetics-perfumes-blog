@@ -10,11 +10,11 @@ const { encryptCookie } = require("./middleware/encrypt-cookie");
 const authRouter = require("./routes/auth-router");
 const userRouter = require("./routes/user-route");
 const blogRouter = require("./routes/blog-route");
-const categoryRouter = require('./routes/category-route')
-const authorRouter = require('./routes/author-route')
-const tagRouter = require('./routes/tag-route');
+const categoryRouter = require("./routes/category-route");
+const authorRouter = require("./routes/author-route");
+const tagRouter = require("./routes/tag-route");
 const uploadRouter = require("./routes/upload-route");
-const cloudinaryRouter = require('./routes/cloudinary-router')
+const cloudinaryRouter = require("./routes/cloudinary-router");
 
 const app = express();
 app.use(express.json());
@@ -33,11 +33,8 @@ app.use(cookieParser());
 
 //app.use(encryptCookie(process.env.COOKIE_SECRET_KEY));
 
-
-
-
 //app.use(express.static(path.join(__dirname, "client", "build")));
-//app.use(express.static(path.join(__dirname, 'client', 'public')))
+//app.use(express.static(path.join(__dirname, 'client', 'src', 'media', 'images')))
 //app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 /* 
@@ -51,22 +48,20 @@ app.use(
 ); */
 //app.use(express.static(path.join(__dirname, "client", "public")))
 
-//let test = path.resolve(publicFolder, pathname.replace(new RegExp('^' + servedPath), ''))
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-}); 
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/blogs", blogRouter);
-app.use('/api/categories', categoryRouter)
-app.use('/api/authors', authorRouter);
-app.use('/api/tags', tagRouter);
+app.use("/api/categories", categoryRouter);
+app.use("/api/authors", authorRouter);
+app.use("/api/tags", tagRouter);
 app.use("/api/upload", uploadRouter);
 //app.use('/api/cloudinary', cloudinaryRouter)
 
-
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 app.use(globalErrorHandler);
 
