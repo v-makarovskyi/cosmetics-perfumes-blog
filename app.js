@@ -26,7 +26,7 @@ app.use(
     origin: function (origin, cb) {
       if (
         [
-          "http://localhost/9000",
+          "http://localhost:9000",
           "https://cosmetics-perfumes-blog.vercel.app",
         ].indexOf(origin) !== -1
       ) {
