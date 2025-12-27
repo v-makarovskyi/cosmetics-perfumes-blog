@@ -33,10 +33,6 @@ app.use(cookieParser());
 
 //app.use(encryptCookie(process.env.COOKIE_SECRET_KEY));
 
-//app.use(express.static(path.join(__dirname, "client", "build")));
-//app.use(express.static(path.join(__dirname, 'client', 'src', 'media', 'images')))
-//app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
 /* 
 app.use(
   "/uploads",
@@ -46,8 +42,6 @@ app.use(
     
   })
 ); */
-//app.use(express.static(path.join(__dirname, "client", "public")))
-
 app.use(express.static(path.join(__dirname, "client", "build")));
 
 app.use("/api/auth", authRouter);
@@ -58,6 +52,7 @@ app.use("/api/authors", authorRouter);
 app.use("/api/tags", tagRouter);
 app.use("/api/upload", uploadRouter);
 //app.use('/api/cloudinary', cloudinaryRouter)
+
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
