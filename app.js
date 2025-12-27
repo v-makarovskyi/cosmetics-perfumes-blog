@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger("dev"));
 app.use(
   cors({
-    origin: "http://localhost:8080",
+    origin: "https://cosmetics-perfumes-blog.vercel.app",
     credentials: true,
     optionsSuccessStatus: 200,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
