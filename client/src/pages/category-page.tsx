@@ -35,9 +35,12 @@ export const CategoryPage: FC = (): JSX.Element => {
         <div className="single-category-page__top">
           <div className="single-category-page__top-wrapper">
             <div className="single-category-page__image-container">
-              <a href="/">
-                <img src={data?.category.category_image} alt="" />
-              </a>
+              <img
+                src={data?.category.category_image}
+                width={1280}
+                height={700}
+                alt="category_image"
+              />
             </div>
             <div className="single-category-page__description">
               <span>{data?.category.name}</span>
