@@ -23,7 +23,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger("dev"));
 app.use(
   cors({
-    origin: "https://cosmetics-perfumes-blog.vercel.app",
+    origin: function (origin, cb) {
+      if (
+        [
+          "http://localhost/9000",
+          "https://cosmetics-perfumes-blog.vercel.app",
+        ].indexOf(origin) !== -1
+      ) {
+        cb(null, true);
+      } else {
+        cb(new Error("Не разрешено CORS"));
+      }
+    },
     credentials: true,
     optionsSuccessStatus: 200,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
