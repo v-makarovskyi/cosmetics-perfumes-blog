@@ -2,18 +2,96 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-   <!--  <meta
+    <!--  <meta
       http-equiv="Content-Security-Policy"
       content="img-src  http://localhost:8080 i.ibb.co data: https://res.cloudinary.com; style-src 'unsafe-inline'"
     /> -->
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" /> 
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <meta name="theme-color" content="#000000" />
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src ''; script-src-elem '' file://*"> -->
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+      .load {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(5, 5, 22);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .load-area {
+        width: 10vh;
+        aspect-ratio: 1/1;
+        perspective: 3000px;
+        transform-style: preserve-3d;
+        transform: rotateX(0deg) rotateY(0deg);
+        animation: box 10s infinite linear;
+      }
+
+      .load-area .ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border: 1vw solid #ffffff;
+        border-radius: 50%;
+        border-bottom-color: transparent;
+        border-left-width: 0px;
+        animation: spin 1s linear infinite;
+      }
+
+      .load-area .ring.ring--1 {
+        border-right-color: red;
+        border-top-color: orange;
+        --r: rotateY(0);
+        transform: translate(-50%, -50%) rotateZ(0deg);
+      }
+
+      .load-area .ring.ring--2 {
+        border-right-color: yellow;
+        border-top-color: yellowgreen;
+        --r: rotateY(-90deg);
+        transform: translate(-50%, -50%) var(--r);
+        animation-delay: calc(1s * 0.75);
+      }
+
+      .load-area .ring.ring--3 {
+        border-right-color: blue;
+        border-top-color: rgb(67, 52, 227);
+        --r: rotateX(-90deg);
+        transform: translate(-50%, -50%) var(--r);
+        animation-delay: calc(1s * 0.5);
+      }
+
+      @keyframes box {
+        to {
+          transform: rotateX(360deg) rotateY(360deg);
+        }
+      }
+
+      @keyframes spin {
+        to {
+          transform: translate(-50%, -50%) var(--r) rotateZ(360deg);
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="load">
+        <div class="load-area">
+          <div class="ring ring--1"></div>
+          <div class="ring ring--2"></div>
+          <div class="ring ring--3"></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
