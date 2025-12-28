@@ -21,9 +21,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(logger("dev"));
+
 app.use(
   cors({
-    origin: "https://cosmetics-perfumes-blog.vercel.app",
+    origin: function (origin, cb) {
+      if (
+        [
+          "https://cosmetics-perfumes-blog.vercel.app",
+          "http://localhost:8080",
+        ].indexOf(origin) !== -1
+      ) {
+        cb(null, true);
+      } else {
+        cb(new Error("CORS не разрешен!"));
+      }
+    },
     credentials: true,
     optionsSuccessStatus: 200,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
@@ -53,11 +65,10 @@ app.use("/api/tags", tagRouter);
 app.use("/api/upload", uploadRouter);
 //app.use('/api/cloudinary', cloudinaryRouter)
 
-
-app.get("*", (req, res) => {
+/* app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
-
+ */
 app.use(globalErrorHandler);
 
 app.use((req, res, next) => {
