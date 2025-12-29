@@ -24,7 +24,7 @@ app.use(logger("dev"));
 
 app.use(
   cors({
-    origin: /* "https://cosmetics-perfumes-blog.vercel.app" */ 'http://localhost:9000',
+    origin: ["https://cosmetics-perfumes-blog.vercel.app", 'http://localhost:9000'],
     credentials: true,
     optionsSuccessStatus: 200,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
