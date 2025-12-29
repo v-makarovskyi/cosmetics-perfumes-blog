@@ -5,7 +5,7 @@ const  PUBLIC_API_BASE_URL_DEV = 'http://localhost:9000/api/'
 export const perfumesBlogApi = createApi({
   reducerPath: "perfumesBlogApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NODE_ENV === 'development' ? PUBLIC_API_BASE_URL_DEV : PUBLIC_API_BASE_URL,
+    baseUrl: PUBLIC_API_BASE_URL,
     prepareHeaders: (headers,  {getState}) => {},
     credentials: "include",
   }),
