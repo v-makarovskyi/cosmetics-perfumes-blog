@@ -96,9 +96,9 @@ export const Footer: FC = (): JSX.Element => {
 
           <div className="footer__extra">
             <div className="row">
-              <div className="col-12 col-lg-6">
+              <div className="col-12 text-center">
                 <div className="footer__extra-copyright">
-                  © 2025 | Все права защищены | makarovskyi.v@gmail.com ✅
+                  © 2025 | makarovskyi.v@gmail.com ✅
                 </div>
               </div>
             </div>

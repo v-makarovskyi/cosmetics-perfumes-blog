@@ -4,7 +4,6 @@ import { CommonBreadcrumb } from "@components/breadcrumb/common-breadcrumb";
 import { BlogGridArea } from "@components/blog-grid/blog-grid-area";
 import { SectionTitile } from "@components/blog-grid/section-title";
 import home_bg from "@media/images/breadcrumb-bg-home.png";
-import { BlogGridAreaSkeleton } from "@src/components/skeletons";
 import { useOutletContextData } from "@src/layout/root-layout";
 
 const Home: FC = (): JSX.Element => {
@@ -37,6 +36,7 @@ const Home: FC = (): JSX.Element => {
         setBlogsDataPosition={setBlogsDataPosition}
         onHandleAddBlogToWishlist={handleAddBlogToWishlist}
         onHandleDeleteBlogFromWishlist={handleDeleteBlogFromWishlist}
+        isLoading={isLoading}
       />
     </section>
   );

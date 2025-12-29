@@ -1,11 +1,18 @@
-import { FC, useState, useEffect, Dispatch, SetStateAction } from "react";
+import React, {
+  FC,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  ReactNode,
+} from "react";
 import { BlogSidebar } from "./blog-sidebar";
 import { ListTab } from "@src/svg/list-tab";
 import { GridTab } from "@src/svg/grid-tab";
 import { BlogItem } from "./blog-item";
 import { Pagination } from "../pagination";
 import type { Blog } from "@client_types/clientTypes";
-
+import { BlogCardLoader } from "../loaders/blog-card-loader";
 type BlogGridAreaProps = {
   list_area?: boolean;
   blogsDataForPagination?: Blog[];
@@ -15,12 +22,9 @@ type BlogGridAreaProps = {
     startPosition: number;
     stopPosition: number;
   }) => void;
-  onHandleAddBlogToWishlist: (
-    slug: Blog["slug"]
-  ) => Promise<void>;
-  onHandleDeleteBlogFromWishlist: (
-    slug: Blog["slug"]
-  ) => Promise<void>;
+  onHandleAddBlogToWishlist: (slug: Blog["slug"]) => Promise<void>;
+  onHandleDeleteBlogFromWishlist: (slug: Blog["slug"]) => Promise<void>;
+  isLoading?: boolean;
 };
 
 export const BlogGridArea: FC<BlogGridAreaProps> = ({
@@ -31,7 +35,9 @@ export const BlogGridArea: FC<BlogGridAreaProps> = ({
   setBlogsDataPosition,
   onHandleAddBlogToWishlist,
   onHandleDeleteBlogFromWishlist,
+  isLoading,
 }): JSX.Element => {
+  
   return (
     <section className="blog-grid-area">
       <div className="container">
@@ -94,22 +100,28 @@ export const BlogGridArea: FC<BlogGridAreaProps> = ({
                 >
                   <div className="blog-grid-area__grid-item-wrapper">
                     <div className="row" style={{ rowGap: 20 }}>
-                      {blogsDataForPagination.map((blog) => {
-                        return (
-                          <div key={blog.id} className="col-md-6 col-lg-6">
-                            <BlogItem
-                              blog={blog}
-                              onHandleAddBlogToWishlist={
-                                onHandleAddBlogToWishlist
-                              }
-                              onHandleDeleteBlogFromWishlist={
-                                onHandleDeleteBlogFromWishlist
-                              }
-                              blogGridItem
-                            />
-                          </div>
-                        );
-                      })}
+                      {isLoading ? (
+                        <BlogCardLoader />
+                      ) : (
+                        <>
+                          {blogsDataForPagination.map((blog) => {
+                            return (
+                              <div key={blog.id} className="col-md-6 col-lg-6">
+                                <BlogItem
+                                  blog={blog}
+                                  onHandleAddBlogToWishlist={
+                                    onHandleAddBlogToWishlist
+                                  }
+                                  onHandleDeleteBlogFromWishlist={
+                                    onHandleDeleteBlogFromWishlist
+                                  }
+                                  blogGridItem
+                                />
+                              </div>
+                            );
+                          })}
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>

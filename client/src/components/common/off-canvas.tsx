@@ -14,7 +14,6 @@ const OffCanvas: FC<OffCanvasProps> = ({
   setIsCanvasOpen,
 }): JSX.Element => {
   const [isCategoryActive, setIsCategoryActive] = useState<boolean>(false);
-  console.log(isCategoryActive);
 
   return (
     <>
@@ -65,7 +64,7 @@ const OffCanvas: FC<OffCanvasProps> = ({
                 </div>
               </div>
               <div className="offcanvas__contact">
-                <Link to="/contacts">Связаться со мной</Link>
+                <a href="https://github.com/v-makarovskyi" target="_blank">Связаться со мной</a>
               </div>
             </div>
             <div className="offcanvas__bottom">
