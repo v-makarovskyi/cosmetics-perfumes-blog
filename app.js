@@ -65,10 +65,10 @@ app.use("/api/tags", tagRouter);
 app.use("/api/upload", uploadRouter);
 //app.use('/api/cloudinary', cloudinaryRouter)
 
-/* app.get("*", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
- */
+
 app.use(globalErrorHandler);
 
 app.use((req, res, next) => {
